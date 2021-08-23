@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>boards</title>
+</head>
+<body>
+Spring boot test
+
+<div class="container">
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bno</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board: ${boards}">
+                <td th:text="${board.bno}">Bno</td>
+                <td th:text="${board.title}">Title</td>
+                <td th:text="${board.content}">Content</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>
