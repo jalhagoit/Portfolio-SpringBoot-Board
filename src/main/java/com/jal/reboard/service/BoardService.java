@@ -27,19 +27,15 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-//    public Board 글하나조회(Long boardId) {
-//        return boardRepository.findOne(boardId);
-//    }
+    /* 글 조회 */
+    @Transactional(readOnly = true)
+    public Board 글상세보기(Long bno) {
+        return boardRepository.findById(bno)
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다.");
+                });
+    }
+
 
     /* 글 수정 */
-    @Transactional
-    public void modify(BoardDTO dto) {
-
-        Board board = boardRepository.getById(dto.getBno());
-
-        board.changeTitle(dto.getTitle());
-        board.changeContent(dto.getContent());
-
-        boardRepository.save(board);
-    }
 }
