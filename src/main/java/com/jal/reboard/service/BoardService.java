@@ -1,9 +1,11 @@
 package com.jal.reboard.service;
 
+import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,4 +28,16 @@ public class BoardService {
 //    public Board 글하나조회(Long boardId) {
 //        return boardRepository.findOne(boardId);
 //    }
+
+    /* 글 수정 */
+    @Transactional
+    public void modify(BoardDTO dto) {
+
+        Board board = boardRepository.getById(dto.getBno());
+
+        board.changeTitle(dto.getTitle());
+        board.changeContent(dto.getContent());
+
+        boardRepository.save(board);
+    }
 }
