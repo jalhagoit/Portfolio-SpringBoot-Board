@@ -2,6 +2,7 @@ package com.jal.reboard;
 
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.entity.Board;
+import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import com.jal.reboard.service.BoardService;
 import org.junit.jupiter.api.Test;
@@ -26,10 +27,11 @@ class ReboardApplicationTests {
 		IntStream.rangeClosed(1,10).forEach(i -> {
 
 			Board board = Board.builder()
-					.title("제목.."+i)
-					.content("내용..." + i)
+					.title("제목c.."+i)
+					.content("내용c..." + i)
 					.build();
 
+			board.setCtype(CType.ONBOARD);
 			boardRepository.save(board);
 
 		});

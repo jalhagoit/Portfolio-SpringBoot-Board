@@ -1,5 +1,6 @@
 package com.jal.reboard.domain.dto;
 
+import com.jal.reboard.domain.type.CType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,4 +15,6 @@ public class BoardDTO {
 
     private LocalDateTime creDate;
     private LocalDateTime modDate;
+
+    private CType ctype;
 }

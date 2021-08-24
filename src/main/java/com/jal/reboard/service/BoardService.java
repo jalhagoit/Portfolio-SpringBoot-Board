@@ -2,6 +2,7 @@ package com.jal.reboard.service;
 
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.entity.Board;
+import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class BoardService {
 
     /* 글 작성 */
     public void 글작성(Board board) {
+        board.setCtype(CType.ONBOARD);
         boardRepository.save(board);
     }
 
