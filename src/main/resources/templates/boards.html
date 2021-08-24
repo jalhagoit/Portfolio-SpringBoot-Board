@@ -16,6 +16,8 @@ Spring boot test
                     <th>Bno</th>
                     <th>Title</th>
                     <th>Content</th>
+                    <th>생성일</th>
+                    <th>수정일</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +25,8 @@ Spring boot test
                 <td th:text="${board.bno}">Bno</td>
                 <td th:text="${board.title}">Title</td>
                 <td th:text="${board.content}">Content</td>
+                <td th:text="${board.creDate}">Content</td>
+                <td th:text="${board.modDate}">Content</td>
             </tr>
             </tbody>
         </table>
