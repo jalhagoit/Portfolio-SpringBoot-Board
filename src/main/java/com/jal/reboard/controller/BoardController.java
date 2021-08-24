@@ -5,10 +5,7 @@ import com.jal.reboard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,6 +44,12 @@ public class BoardController {
         model.addAttribute("board", boardService.글상세보기(bno));
 
         return "detail";
+    }
+
+    @DeleteMapping("/board/{bno}")
+    public String removeBoard(@PathVariable Long bno){
+        boardService.글삭제(bno);
+        return "redirect:/list";
     }
 
 

@@ -36,6 +36,12 @@ public class BoardService {
                 });
     }
 
+    /* 글 삭제 */
+    @Transactional
+    public void 글삭제(Long bno) {
+        boardRepository.deleteById(bno);
+    }
+
 
     /* 글 수정 */
 }
