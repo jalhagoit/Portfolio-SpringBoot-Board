@@ -30,6 +30,9 @@ Spring boot test
             </tr>
             </tbody>
         </table>
+        <a th:href="@{'/board/modify/' + ${board.bno}}">
+            <input type="button" value="수정" />
+        </a>
         <form th:action="@{'/board/' + ${board.bno}}" th:method="delete">
             <button type="submit" class="btn btn-warning">삭제</button>
         </form>

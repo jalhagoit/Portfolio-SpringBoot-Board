@@ -44,4 +44,8 @@ public class BoardService {
 
 
     /* 글 수정 */
+    @Transactional
+    public void 글수정(Board board) {
+        boardRepository.save(board);
+    }
 }

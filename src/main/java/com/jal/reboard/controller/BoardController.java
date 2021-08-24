@@ -52,6 +52,18 @@ public class BoardController {
         return "redirect:/list";
     }
 
+    @GetMapping("/board/modify/{bno}")
+    public String modifyForm(@PathVariable Long bno, Model model) {
+        model.addAttribute("board", boardService.글상세보기(bno));
+        return "modify";
+    }
+
+    @PutMapping("/board/modify/{bno}")
+    public String modifyBoard(Board board) {
+        boardService.글수정(board);
+        return "redirect:/board/{bno}";
+    }
+
 
 //    @PostMapping(value = "/write", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public String writePostJson(@RequestBody Board board) {
