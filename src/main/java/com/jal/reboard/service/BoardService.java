@@ -45,7 +45,13 @@ public class BoardService {
 
     /* 글 수정 */
     @Transactional
-    public void 글수정(Board board) {
+    public void 글수정(BoardDTO boardDTO) {
+
+        Board board = boardRepository.getById(boardDTO.getBno());
+
+        board.changeTitle(boardDTO.getTitle());
+        board.changeContent(boardDTO.getContent());
+
         boardRepository.save(board);
     }
 }

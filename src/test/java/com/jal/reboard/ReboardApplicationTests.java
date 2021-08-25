@@ -45,11 +45,11 @@ class ReboardApplicationTests {
 
 		BoardDTO dto = BoardDTO.builder()
 				.bno(5L)
-				.title("제목 변경2")
-				.content("내용 변경2")
+				.title("@Test에서")
+				.content("테스트")
 				.build();
 
-		boardService.modify(dto);
+		boardService.글수정(dto);
 	}
 
 }

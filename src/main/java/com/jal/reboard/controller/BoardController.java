@@ -1,5 +1,6 @@
 package com.jal.reboard.controller;
 
+import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,9 @@ public class BoardController {
         return "modify";
     }
 
-    @PutMapping("/board/modify/{bno}")
-    public String modifyBoard(Board board) {
-        boardService.글수정(board);
+    @PutMapping("/board/modify/{bno}") //post로도 수정 되는데???
+    public String modifyBoard(BoardDTO dto) {
+        boardService.글수정(dto);
         return "redirect:/board/{bno}";
     }
 
