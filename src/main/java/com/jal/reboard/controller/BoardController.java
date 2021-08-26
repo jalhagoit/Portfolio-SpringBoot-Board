@@ -38,6 +38,7 @@ public class BoardController {
     public String writePost(Board board) {
         boardService.글작성(board);
         return "redirect:/list";
+//        return "redirect:/board/{bno}";
     }
 
     @GetMapping("/board/{bno}")
@@ -64,20 +65,5 @@ public class BoardController {
         boardService.글수정(dto);
         return "redirect:/board/{bno}";
     }
-
-
-//    @PostMapping(value = "/write", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public String writePostJson(@RequestBody Board board) {
-//        boardService.글작성(board);
-//        return "redirect:/list";
-//    }
-
-//    @PostMapping(value = "/write", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-//    public String writePostForm(Board board) {
-//        boardService.글작성(board);
-//        return "redirect:/list";
-//    }
-
-
 
 }

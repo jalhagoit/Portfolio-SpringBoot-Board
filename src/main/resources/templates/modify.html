@@ -1,20 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>write - Thymeleaf 적용</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="fragments/header :: header">
+    <!--    <div th:replace="fragments/header :: header"></div>-->
+
 </head>
+<!--  summernote life?-->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<body>
-Spring boot test
+<body class="d-flex flex-column min-vh-100">
+<!--<div th:replace="fragments/navbar :: navbar"></div>-->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!--content-->
+<main>
+    <div class="p-5 sticky-top"></div> <!--여백-->
 
-<form th:action="@{'/board/modify/' + ${board.bno}}" th:method="put">
-    <p>Title: <input type="text" name="title" th:value="${board.title}"/></p>
-    <p>Content: <input type="text" name="content" th:value="${board.content}"/></p>
-    <p><input type="submit" value="등록"/></p>
-    <p><input type="button" onclick="history.back()" value="취소"></p>
-<!--    history.back 말고 /board/{bno}으로 가도록 변경해야 하나? -->
-</form>
+    <div class="container px-5">
 
+        <form th:action="@{'/board/modify/' + ${board.bno}}" th:method="put">
+            <div class="mb-3">
+                <input type="text" name="title" class="form-control" th:value="${board.title}" placeholder="제목">
+            </div>
+            <!--          글 등록 후 내용에 <p>내용<br></p> 태그가 뜨는 문제 있음.-->
+            <textarea class="form-control summernote" name="content">[[${board.content}]]</textarea>
+            <button class="btn btn-secondary mt-2" onclick="history.back()">취소</button>
+            <button class="btn btn-primary mt-2" type="submit">수정</button>
+            <!--    history.back 말고 /board/{bno}으로 가도록 변경해야 하나? -->
+        </form>
+
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-- th:replace="fragment 위치 :: fragment명" -->
+<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->
+<script>
+      $('.summernote').summernote({
+        placeholder: '내용',
+        tabsize: 2,
+        height: 300,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+    </script>
 </body>
 </html>
