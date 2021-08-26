@@ -27,6 +27,8 @@
                     <td th:text="${board.bno}">Bno</td>
                     <td th:text="${board.title}">Title</td>
 <!--                    <td th:text="${board.writer}">작성자</td>-->
+<!--                    <td><a href="#" class="text-reset">[[${board.creDate}]]</a></td>
+                    board.write로 작성시 주석처리해도 오류 발생. 맵핑 후 creDate를 write로 수정해 사용하면 된다 -->
                     <td th:text="${board.creDate}">생성일</td>
                     <td th:text="${board.modDate}">수정일</td>
                 </tr>
