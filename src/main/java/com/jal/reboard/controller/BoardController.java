@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -45,10 +46,10 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writePost(Board board) {
+    public String writePost(Board board, RedirectAttributes redirectAttributes) {
         boardService.글작성(board);
-        return "redirect:/list";
-//        return "redirect:/board/{bno}";
+        redirectAttributes.addAttribute("bno", board.getBno());
+        return "redirect:/board/{bno}";
     }
 
     @GetMapping("/board/{bno}")
