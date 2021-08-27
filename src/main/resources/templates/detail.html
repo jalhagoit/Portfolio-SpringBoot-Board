@@ -14,7 +14,7 @@
         <div class="mx-5">
             <h3>[[${board.title}]]</h3>
             <p class="border-bottom pb-2 text-muted"> 생성일: [[${#temporals.format(board.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 수정일: [[${#temporals.format(board.modDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">writer</a></p>
-            <p>[[${board.content}]]</p>
+            <p>[(${board.content})]</p>
 
             <a th:href="@{'/board/modify/' + ${board.bno}}">
                 <input type="button" class="btn btn-primary btn-sm" value="수정" />
