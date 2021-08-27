@@ -3,7 +3,12 @@ package com.jal.reboard.controller;
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.service.BoardService;
+import com.jal.reboard.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +27,15 @@ public class BoardController {
     @Autowired
     BoardService boardService;
 
+    @Autowired
+    PaginationService paginationService;
+
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Board> boards = boardService.글목록조회();
+    public String list(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Board> boards = boardService.글목록조회(pageable);
+        List<Integer> pageNums = paginationService.페이지번호(pageable);
         model.addAttribute("boards", boards);
+        model.addAttribute("pageNums", pageNums);
         return "boards";
     }
 

@@ -5,10 +5,10 @@ import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class BoardService {
@@ -23,8 +23,8 @@ public class BoardService {
     }
 
     /* 전체 글 조회 */
-    public List<Board> 글목록조회() {
-        return boardRepository.findAll();
+    public Page<Board> 글목록조회(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     /* 글 조회 */

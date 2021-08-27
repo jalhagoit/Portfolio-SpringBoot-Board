@@ -41,18 +41,15 @@
         <div class="container mt-5 mb-4">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <span class="page-link">Prev</span>
+                    <li th:class="${boards.first}? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" th:href="@{'/list?page=' + ${boards.number-1}}">Prev</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link">2</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+
+                    <li th:each="pageNum : ${pageNums}" th:class="${pageNum == boards.number}? 'page-item active' : 'page-item'" aria-current="page"><a class="page-link" th:href="@{'/list?page=' + ${pageNum}}">[[${pageNum+1}]]</a></li>
+
+
+                    <li th:class="${boards.last}? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" th:href="@{'/list?page=' + ${boards.number+1}}">Next</a>
                     </li>
                 </ul>
             </nav>
