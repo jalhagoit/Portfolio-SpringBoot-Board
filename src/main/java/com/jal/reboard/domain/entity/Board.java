@@ -42,6 +42,9 @@ public class Board {
     private CType ctype;
 
 
+    private Long writer;
+
+
     public void changeTitle(String title){
         this.title = title;
     }
@@ -49,6 +52,10 @@ public class Board {
     public void changeContent(String content){
         this.content = content;
     }
+
+//    public void changeWriter(Long writer){
+//        this.writer = writer;
+//    }
 
 
 }

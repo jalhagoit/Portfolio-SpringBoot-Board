@@ -21,4 +21,6 @@ public class BoardDTO {
     private LocalDateTime modDate;
 
     private CType ctype;
+
+    private Long writer;
 }

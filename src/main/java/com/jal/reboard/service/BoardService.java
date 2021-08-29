@@ -54,4 +54,16 @@ public class BoardService {
 
         boardRepository.save(board);
     }
+
+
+//    /* 작성자 추가 */
+//    @Transactional
+//    public void 작성자추가(BoardDTO boardDTO) {
+//
+//        Board board = boardRepository.getById(boardDTO.getBno());
+//
+//        board.changeWriter(boardDTO.getWriter());
+//
+//        boardRepository.save(board);
+//    }
 }
