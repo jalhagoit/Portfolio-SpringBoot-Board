@@ -8,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Builder
 @NoArgsConstructor
@@ -42,7 +41,19 @@ public class Board {
     private CType ctype;
 
 
-    private Long writer;
+    @ManyToOne
+    @JoinColumn(name = "mno")
+    private Member member;
+
+    //연관관계 설정
+    public void setMember(Member member) {
+        this.member = member;
+
+        //무한루프 빠지지 않도록 체크
+        if(!member.getBoards().contains(this)){
+            member.getBoards().add(this);
+        }
+    }
 
 
     public void changeTitle(String title){

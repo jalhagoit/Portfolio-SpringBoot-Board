@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -45,5 +47,16 @@ public class Member {
 
 
 //    private LocalDateTime delDate;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member")
+    private List<Board> boards = new ArrayList<>();
+
+    public void addBoard(Board board) {
+        this.boards.add(board);
+        if (board.getMember() != this) { //무한루프 빠지지 않도록 체크
+            board.setMember(this);
+        }
+    }
 
 }
