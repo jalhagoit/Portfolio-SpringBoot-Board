@@ -26,5 +26,8 @@ public class MemberService {
 
     /* 로그인 */
 
+    /* 회원 조회 */
+
+
 
 }
