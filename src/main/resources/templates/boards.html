@@ -17,7 +17,7 @@
                 <tr>
                     <th>Bno</th>
                     <th>제목</th>
-<!--                    <th>작성자</th>-->
+                    <th>작성자</th>
                     <th>생성일</th>
                     <th>수정일</th>
                 </tr>
@@ -26,9 +26,7 @@
                 <tr th:each="board: ${boards}" >
                     <td th:text="${board.bno}">Bno</td>
                     <td><a th:href="@{'/board/' + ${board.bno}}">[[${board.title}]]</a></td>
-<!--                    <td th:text="${board.writer}">작성자</td>-->
-<!--                    <td><a href="#" class="text-reset">[[${board.creDate}]]</a></td>
-                    board.write로 작성시 주석처리해도 오류 발생. 맵핑 후 creDate를 write로 수정해 사용하면 된다 -->
+                    <td><a href="#" class="text-reset">[[${board.member.username}]]</a></td>
                     <td th:text="${#temporals.format(board.creDate, 'yyyy-MM-dd HH:mm:SS')}">생성일</td>
                     <td th:text="${#temporals.format(board.modDate, 'yyyy-MM-dd HH:mm:SS')}">수정일</td>
                 </tr>
