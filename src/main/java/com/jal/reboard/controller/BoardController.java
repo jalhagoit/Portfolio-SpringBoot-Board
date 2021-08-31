@@ -19,10 +19,10 @@ import java.util.List;
 @Controller
 public class BoardController {
 
-    @GetMapping("/")
-    public String test(){
-        return "index";
-    }
+//    @GetMapping("/")
+//    public String test(){
+//        return "index";
+//    }
 
 
     @Autowired
@@ -31,7 +31,7 @@ public class BoardController {
     @Autowired
     PaginationService paginationService;
 
-    @GetMapping("/list")
+    @GetMapping({"/", "/list"})
     public String list(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Board> boards = boardService.글목록조회(pageable);
         List<Integer> pageNums = paginationService.페이지번호(pageable);
