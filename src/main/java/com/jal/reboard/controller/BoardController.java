@@ -37,12 +37,12 @@ public class BoardController {
         List<Integer> pageNums = paginationService.페이지번호(pageable);
         model.addAttribute("boards", boards);
         model.addAttribute("pageNums", pageNums);
-        return "boards";
+        return "board/boards";
     }
 
     @GetMapping("/write")
     public String writeForm(){
-        return "write";
+        return "board/write";
     }
 
     @PostMapping("/write")
@@ -56,7 +56,7 @@ public class BoardController {
     public String findById(@PathVariable Long bno, Model model) {
         model.addAttribute("board", boardService.글상세보기(bno));
 
-        return "detail";
+        return "board/detail";
     }
 
     @DeleteMapping("/board/{bno}")
@@ -68,7 +68,7 @@ public class BoardController {
     @GetMapping("/board/modify/{bno}")
     public String modifyForm(@PathVariable Long bno, Model model) {
         model.addAttribute("board", boardService.글상세보기(bno));
-        return "modify";
+        return "board/modify";
     }
 
     @PutMapping("/board/modify/{bno}") //post로도 수정 되는데???

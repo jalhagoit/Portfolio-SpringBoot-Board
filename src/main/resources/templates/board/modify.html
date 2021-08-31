@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head th:replace="fragments/header :: header">
     <!--    <div th:replace="fragments/header :: header"></div>-->
-
 </head>
-<!--  summernote life?-->
+<!--  summernote life? script 부분을 하단에 두면 내용 입력 부분이 한 박자 늦게 뜸-->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -32,10 +29,7 @@
     </div>
 </main>
 
-<footer th:replace="fragments/footer :: footer"></footer>
-<!-- th:replace="fragment 위치 :: fragment명" -->
-<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->
-<script>
+    <script>
       $('.summernote').summernote({
         placeholder: '내용',
         tabsize: 2,
@@ -51,5 +45,6 @@
         ]
       });
     </script>
-</body>
-</html>
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-- th:replace="fragment 위치 :: fragment명" -->
+<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->
