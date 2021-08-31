@@ -11,10 +11,7 @@ import com.jal.reboard.service.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 

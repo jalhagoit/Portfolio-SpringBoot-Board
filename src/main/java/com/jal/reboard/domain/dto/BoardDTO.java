@@ -1,5 +1,6 @@
 package com.jal.reboard.domain.dto;
 
+import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.CType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,5 @@ public class BoardDTO {
 
     private CType ctype;
 
-    private Long writer;
+    private Member member;
 }

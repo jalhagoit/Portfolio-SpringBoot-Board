@@ -1,5 +1,6 @@
 package com.jal.reboard.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jal.reboard.domain.type.RoleType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,7 +30,8 @@ public class Member {
 
     @Column(length = 100)
     @NotBlank(message = "Password에 빈칸을 허용하지 않습니다.")
-    private String password;
+    @JsonIgnore
+    private transient String password;
 
 //    @Column(unique = true)
 //    private String email;
@@ -49,7 +51,8 @@ public class Member {
 //    private LocalDateTime delDate;
 
     @Builder.Default
-    @OneToMany(mappedBy = "member")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @JsonIgnore
     private List<Board> boards = new ArrayList<>();
 
     public void addBoard(Board board) {

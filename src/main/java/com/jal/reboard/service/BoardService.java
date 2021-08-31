@@ -1,6 +1,7 @@
 package com.jal.reboard.service;
 
 import com.jal.reboard.domain.dto.BoardDTO;
+import com.jal.reboard.domain.dto.BoardListResponseDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
@@ -9,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
@@ -25,6 +29,14 @@ public class BoardService {
     /* 전체 글 조회 */
     public Page<Board> 글목록조회(Pageable pageable) {
         return boardRepository.findAll(pageable);
+    }
+
+    /* @Query로 원하는 필드들만 조회하려는데 ConverterNotFoundException이 뜬다 */
+    @Transactional(readOnly = true)
+    public List<BoardListResponseDTO> findAllDesc() {
+        return boardRepository.findAllDesc().stream()
+                .map(BoardListResponseDTO::new)
+                .collect(Collectors.toList());
     }
 
     /* 글 조회 */
