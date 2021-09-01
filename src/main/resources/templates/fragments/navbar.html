@@ -25,8 +25,9 @@
                             <button type="submit" class="btn btn-sm btn-outline-light">로그아웃</button> <!-- /logout -->
                         </form>
                     </div>
-                    <li class="nav-item" th:if="${#request.isUserInRole('USER')}">
-<!--                        th:if="${#httpServletRequest.isUserInRole('USER')}" 이것도 작동함 -->
+                    <li class="nav-item" th:if="${#httpServletRequest.getUserPrincipal()}">
+<!--                        th:if="${#request.isUserInRole('USER')}"-->
+<!--                        th:if="${#httpServletRequest.isUserInRole('USER')}" 둘 다 동작 안 함  -->
                         <a class="nav-link disable" aria-current="page" href="/write">글쓰기</a>
                     </li>
                 </ul>
