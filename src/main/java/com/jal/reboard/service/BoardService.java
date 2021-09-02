@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,27 @@ public class BoardService {
         return boardRepository.findAllDesc().stream()
                 .map(BoardListResponseDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public boolean 작성자일치확인(Long bno, HttpServletRequest httpServletRequest) {
+        String writer = boardRepository.findById(bno)
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("글 상세보기 실패 : bno를 찾을 수 없습니다.");
+                })
+                .getMember().getUsername();
+
+        try {
+            String username = httpServletRequest.getUserPrincipal().getName();
+            return writer.equals(username);
+        } catch (NullPointerException e) {
+            System.out.println("사용자가 로그인을 하지 않았습니다.");
+            return false;
+        } catch (Exception e) {
+            System.out.println("무슨 예외야?");
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /* 글 조회 */

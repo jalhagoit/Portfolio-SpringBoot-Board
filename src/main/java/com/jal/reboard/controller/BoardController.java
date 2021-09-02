@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -67,9 +68,11 @@ public class BoardController {
     }
 
     @GetMapping("/board/modify/{bno}")
-    public String modifyForm(@PathVariable Long bno, Model model) {
-        model.addAttribute("board", boardService.글상세보기(bno));
-        return "board/modify";
+    public String modifyForm(HttpServletRequest httpServletRequest, @PathVariable Long bno, Model model) {
+        if (boardService.작성자일치확인(bno, httpServletRequest)) {
+            model.addAttribute("board", boardService.글상세보기(bno));
+            return "board/modify";
+        } return "redirect:/list";
     }
 
     @PutMapping("/board/modify/{bno}") //post로도 수정 되는데???
