@@ -1,17 +1,37 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Login page</title>
+<head th:replace="fragments/header :: header">
 </head>
-<body>
-<h1>Login page</h1>
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/login}" method="post">
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
-    <input type="submit" value="Log in" />
-</form>
-</body>
-</html>
+<link th:href="@{/styles/css/signin.css}" rel="stylesheet">
+<!-- 아래에 배치해도 브라우저에서는 head태그 내부로 들어간다. head태그 안으로 넣으면 fragment로 교체되기 때문에 적용되지 않는다.-->
+
+<body class="d-flex flex-column min-vh-100 text-center">
+
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+
+    <!--content-->
+    <main class="form-signin">
+        <div class="p-4 sticky-top"></div> <!--여백-->
+        <form th:action="@{/login}" method="post">
+            <h1 class="h2 pt-2 mb-3 fw-normal">Login page</h1>
+            <p th:if="${loginError}" class="error">Wrong user or password</p>
+            <div class="form-floating">
+                <input type="text" name="username" autofocus="autofocus" class="form-control" id="floatingInput" placeholder="Username">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <!--        <p class="mt-5 mb-3 text-muted">© 2017–2021</p>-->
+        </form>
+    </main>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+    <!-- th:replace="fragment 위치 :: fragment명" -->
+    <!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->
