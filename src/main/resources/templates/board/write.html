@@ -20,6 +20,7 @@
                 <input type="text" name="title" class="form-control" placeholder="제목">
             </div>
             <textarea class="form-control summernote" name="content"></textarea>
+            <input type="hidden" class="form-control" name="username" th:value="${#httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
             <button id="btn-cancel" class="btn btn-secondary mt-2" onclick="history.back()">취소</button>
             <button id="btn-write" class="btn btn-primary mt-2" type="submit">완료</button>
         </form>

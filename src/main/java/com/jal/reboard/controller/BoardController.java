@@ -1,6 +1,7 @@
 package com.jal.reboard.controller;
 
 import com.jal.reboard.domain.dto.BoardDTO;
+import com.jal.reboard.domain.dto.BwriteDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.service.BoardService;
 import com.jal.reboard.service.PaginationService;
@@ -46,8 +47,8 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writePost(Board board, RedirectAttributes redirectAttributes) {
-        boardService.글작성(board);
+    public String writePost(Board board, BwriteDTO dto, RedirectAttributes redirectAttributes) {
+        boardService.글작성(board, dto);
         redirectAttributes.addAttribute("bno", board.getBno());
         return "redirect:/board/{bno}";
     }

@@ -2,7 +2,9 @@ package com.jal.reboard.service;
 
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.dto.BoardListResponseDTO;
+import com.jal.reboard.domain.dto.BwriteDTO;
 import com.jal.reboard.domain.entity.Board;
+import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,9 @@ public class BoardService {
     BoardRepository boardRepository;
 
     /* 글 작성 */
-    public void 글작성(Board board) {
+    public void 글작성(Board board, BwriteDTO dto) {
+        Member mno = boardRepository.findMnoByUsername(dto.getUsername());
+        board.setMember(mno);
         board.setCtype(CType.ONBOARD);
         boardRepository.save(board);
     }

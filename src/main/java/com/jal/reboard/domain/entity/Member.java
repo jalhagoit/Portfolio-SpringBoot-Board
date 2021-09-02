@@ -24,7 +24,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mno;
 
-    @Column(length = 30, unique = true)
+    @Column(length = 30, unique = true, updatable = false)
     @NotBlank(message = "Username에 빈칸을 허용하지 않습니다.")
     private String username;
 
