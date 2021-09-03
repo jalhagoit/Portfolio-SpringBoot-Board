@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +43,13 @@ public class BoardController {
         return "board/boards";
     }
 
+    @PreAuthorize("isAuthenticated()") // 로그인 해야 해당 페이지로 넘어간다.
     @GetMapping("/write")
     public String writeForm(){
         return "board/write";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String writePost(Board board, BwriteDTO dto, RedirectAttributes redirectAttributes) {
         boardService.글작성(board, dto);
