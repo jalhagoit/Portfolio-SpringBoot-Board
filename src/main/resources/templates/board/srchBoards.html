@@ -1,0 +1,58 @@
+<head th:replace="fragments/header :: header">
+    <!--    <div th:replace="fragments/header :: header"></div>-->
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!--<div th:replace="fragments/navbar :: navbar"></div>-->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!--content-->
+<main>
+    <div class="p-5 sticky-top"></div> <!--여백-->
+    <!--게시판-->
+    <div class="container px-5">
+        <div class="mx-5">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Bno</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>생성일</th>
+                    <th>수정일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board: ${boards}" >
+                    <td th:text="${board.bno}">Bno</td>
+                    <td><a th:href="@{'/board/' + ${board.bno}}">[[${board.title}]]</a></td>
+                    <td><a href="#" class="text-reset">[[${board.member.username}]]</a></td>
+                    <td th:text="${#temporals.format(board.creDate, 'yyyy-MM-dd HH:mm:SS')}">생성일</td>
+                    <td th:text="${#temporals.format(board.modDate, 'yyyy-MM-dd HH:mm:SS')}">수정일</td>
+                </tr>
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+
+        <!--페이징-->
+        <div class="container mt-5 mb-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li th:class="${boards.first}? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" th:href="@{'/list/search?keyword=' + ${keyword} + '&page=' + ${boards.number-1}}">Prev</a>
+                    </li>
+
+                    <li th:each="pageNum : ${pageNums}" th:class="${pageNum == boards.number}? 'page-item active' : 'page-item'" aria-current="page"><a class="page-link" th:href="@{'/list/search?keyword=' + ${keyword} + '&page=' + ${pageNum}}">[[${pageNum+1}]]</a></li>
+
+
+                    <li th:class="${boards.last}? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" th:href="@{'/list/search?keyword=' + ${keyword} + '&page=' + ${boards.number+1}}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-- th:replace="fragment 위치 :: fragment명" -->
+<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->

@@ -43,6 +43,19 @@ public class BoardController {
         return "board/boards";
     }
 
+
+    @GetMapping("/list/search")
+    public String 제목검색(String keyword, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
+
+        Page<Board> boards = boardService.제목검색("%"+keyword+"%", pageable);
+        List<Integer> pageNums = paginationService.제목검색페이지번호("%"+keyword+"%", pageable);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("boards", boards);
+        model.addAttribute("pageNums", pageNums);
+        return "board/srchBoards";
+    }
+
+
     @PreAuthorize("isAuthenticated()") // 로그인 해야 해당 페이지로 넘어간다.
     @GetMapping("/write")
     public String writeForm(){

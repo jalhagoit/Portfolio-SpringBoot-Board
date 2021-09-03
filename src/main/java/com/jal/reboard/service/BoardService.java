@@ -36,6 +36,14 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+    /* 글 제목 검색 */
+    @Transactional(readOnly = true)
+    public Page<Board> 제목검색(String title, Pageable pageable) {
+        Page<Board> boardList = boardRepository.findByTitleLike(title, pageable);
+
+        return boardList;
+    }
+
     /* @Query로 원하는 필드들만 조회하려는데 ConverterNotFoundException이 뜬다 */
     @Transactional(readOnly = true)
     public List<BoardListResponseDTO> findAllDesc() {

@@ -42,6 +42,16 @@ public class BaordApiControllerTest {
         return boardService.글목록조회(pageable);
     }
 
+//    @GetMapping("/list/search")
+//    public Page<Board> 제목검색(String keyword, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable , Model model) {
+//
+//        Page<Board> searchList = boardService.제목검색("%"+keyword+"%", pageable);
+//        List<Integer> pageNums = paginationService.페이지번호(pageable);
+//
+//        return searchList;
+//    }
+
+
     @GetMapping("/test/list/new")
     public List<BoardListResponseDTO> findAll() {
         return boardService.findAllDesc();
