@@ -1,6 +1,7 @@
 package com.jal.reboard.controller;
 
 import com.jal.reboard.domain.dto.BoardDTO;
+import com.jal.reboard.domain.dto.BoardRfDTO;
 import com.jal.reboard.domain.dto.BwriteDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.service.BoardService;
@@ -36,10 +37,9 @@ public class BoardController {
 
     @GetMapping({"/", "/list"})
     public String list(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Board> boards = boardService.글목록조회(pageable);
-        List<Integer> pageNums = paginationService.페이지번호(pageable);
-        model.addAttribute("boards", boards);
-        model.addAttribute("pageNums", pageNums);
+        BoardRfDTO dto = paginationService.페이지번호(pageable);
+        model.addAttribute("boards", dto.getFindall());
+        model.addAttribute("pageNums", dto.getPagination());
         return "board/boards";
     }
 

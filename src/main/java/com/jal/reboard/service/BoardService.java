@@ -31,10 +31,11 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    /* 전체 글 조회 */
-    public Page<Board> 글목록조회(Pageable pageable) {
-        return boardRepository.findAll(pageable);
-    }
+    /* 전체 글 조회 */ //PagenationService에서 BoardRfDTO로 처리.
+    // 이상 없으면 삭제할 것.
+//    public Page<Board> 글목록조회(Pageable pageable) {
+//        return boardRepository.findAll(pageable);
+//    }
 
     /* 글 제목 검색 */
     @Transactional(readOnly = true)
