@@ -1,18 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>회원가입 - Thymeleaf 적용</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="fragments/header :: header">
+    <!--    <div th:replace="fragments/header :: header"></div>-->
 </head>
+<body class="d-flex flex-column min-vh-100">
+<!--<div th:replace="fragments/navbar :: navbar"></div>-->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!--content-->
 
-<body>
-Spring boot test
+<div class="container px-5 pt-5 m-5">
 
-<form th:action="@{/register}" method="POST">
-    <p>Username: <input type="text" name="username"/></p>
-    <p>Password: <input type="password" name="password"/></p>
-    <p><input type="submit" value="가입"/></p>
-</form>
+    <div class="container mt-3 px-5">
+        <div>
+            <main>
 
-</body>
-</html>
+                <form th:action="@{/register}" method="POST" class="needs-validation" novalidate>
+                    <div class="card w-50">
+                        <div class="card-header blockquote p-3">
+                            회원가입
+                        </div>
+                        <div class="card-body mb-3">
+                            <div>
+                                <label class="form-label" for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                                <div class="invalid-feedback">
+                                    Please provide Username.
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label mt-2" for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <div class="invalid-feedback">
+                                    Please provide Password.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer py-3">
+                            <button id="btn-signup" class="btn btn-primary" type="submit">가입</button>
+                        </div>
+                    </div>
+                </form>
+
+            </main>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-- th:replace="fragment 위치 :: fragment명" -->
+<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->

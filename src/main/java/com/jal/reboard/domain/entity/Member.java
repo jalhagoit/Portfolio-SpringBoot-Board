@@ -31,7 +31,7 @@ public class Member {
     @Column(length = 100)
     @NotBlank(message = "Password에 빈칸을 허용하지 않습니다.")
     @JsonIgnore
-    private transient String password;
+    private String password; // transient 넣으니까 회원가입할 때 비번 저장이 안 됨.
 
 //    @Column(unique = true)
 //    private String email;
