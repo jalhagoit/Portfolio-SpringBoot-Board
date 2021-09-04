@@ -1,14 +1,16 @@
 <head th:replace="fragments/header :: header">
-    <!--    <div th:replace="fragments/header :: header"></div>-->
+  <!--    <div th:replace="fragments/header :: header"></div>-->
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100" th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
 <!--<div th:replace="fragments/navbar :: navbar"></div>-->
 <nav th:replace="fragments/navbar :: navbar"></nav>
 <!--content-->
 
 <div class="container p-5 m-5">
 
-<h1>회원가입이 완료되었습니다.</h1>
+<h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
+<p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+<a href="index.html" th:href="@{/index.html}">Back to Home Page</a>
 
 </div>
 
