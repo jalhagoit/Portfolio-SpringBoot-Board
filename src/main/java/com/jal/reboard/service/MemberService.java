@@ -1,5 +1,6 @@
 package com.jal.reboard.service;
 
+import com.jal.reboard.domain.dto.MemberInfoDTO;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.RoleType;
 import com.jal.reboard.repository.MemberRepository;
@@ -27,6 +28,16 @@ public class MemberService {
     /* 로그인 */
 
     /* 회원 조회 */
+    public MemberInfoDTO 회원정보조회(String username) {
+        Member member = memberRepository.findMnoByUsername(username);
+        MemberInfoDTO dto = MemberInfoDTO.builder()
+                .mno(member.getMno())
+                .username(member.getUsername())
+                .regDate(member.getRegDate())
+                .build();
+
+        return dto;
+    }
 
 
 

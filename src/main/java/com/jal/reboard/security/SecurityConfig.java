@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
             .and()
                 .authorizeRequests()
-                .antMatchers("/write").hasAuthority("USER") // 왜 hasRole("USER")는 forbidden 뜨지?
+                .antMatchers("/write", "/mem/**").hasAuthority("USER") // 왜 hasRole("USER")는 forbidden 뜨지?
                 .antMatchers("/", "/**").permitAll()
             .and().httpBasic();
     }

@@ -7,6 +7,7 @@ import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
+import com.jal.reboard.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +22,12 @@ public class BoardService {
     @Autowired
     BoardRepository boardRepository;
 
+    @Autowired
+    MemberRepository memberRepository;
+
     /* 글 작성 */
     public void 글작성(Board board, BwriteDTO dto) {
-        Member mno = boardRepository.findMnoByUsername(dto.getUsername());
+        Member mno = memberRepository.findMnoByUsername(dto.getUsername());
         board.setMember(mno);
         board.setCtype(CType.ONBOARD);
         boardRepository.save(board);

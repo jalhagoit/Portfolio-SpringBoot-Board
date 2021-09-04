@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="fragments/header :: header">
+    <!--    <div th:replace="fragments/header :: header"></div>-->
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!--<div th:replace="fragments/navbar :: navbar"></div>-->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!--content-->
+
+<div class="container p-5 m-5">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/mem">회원정보</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/mem/boards">작성글</a>
+        </li>
+    </ul>
+    <div class="container my-4">
+        <div>
+            <main>
+                <!--게시판-->
+                <div class="container">
+                    <div>
+                        <ul class="list-group">
+                            <li class="list-group-item">Username : [[${#httpServletRequest.getUserPrincipal().getPrincipal().getUsername}]]</li>
+                            <li class="list-group-item">Password : <a href="/mem/changeInfo" class="card-link">변경</a></li>
+                            <li class="list-group-item disabled" aria-disabled="true">가입일 : [[${#temporals.format(regDate, 'yyyy-MM-dd HH:mm:SS')}]]</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-- th:replace="fragment 위치 :: fragment명" -->
+<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->
+</body>
+</html>

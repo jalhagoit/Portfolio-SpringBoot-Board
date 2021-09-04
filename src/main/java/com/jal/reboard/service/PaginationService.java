@@ -2,9 +2,12 @@ package com.jal.reboard.service;
 
 import com.jal.reboard.domain.dto.BoardRfDTO;
 import com.jal.reboard.domain.entity.Board;
+import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.repository.BoardRepository;
+import com.jal.reboard.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,9 @@ public class PaginationService {
 
     @Autowired
     BoardRepository boardRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
     public BoardRfDTO 페이지(Pageable pageable) {
@@ -34,6 +40,21 @@ public class PaginationService {
 
         return new BoardRfDTO(ft, pagination(ft));
     }
+
+    @Transactional(readOnly = true)
+    public BoardRfDTO 회원작성글페이지(String username, Pageable pageable) {
+
+        Member member = memberRepository.findMnoByUsername(username);
+        List<Board> boards = member.getBoards();
+
+        //List<> -> Page<>
+        int start = (int)pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), boards.size());
+        Page<Board> page = new PageImpl<>(boards.subList(start, end), pageable, boards.size());
+
+        return new BoardRfDTO(page, pagination(page)); // DESC 내림차순 정렬 안됨.
+    }
+
 
 
     /* 페이지 번호 계산 */
