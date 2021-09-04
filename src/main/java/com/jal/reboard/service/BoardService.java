@@ -8,8 +8,6 @@ import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,19 +29,6 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    /* 전체 글 조회 */ //PagenationService에서 BoardRfDTO로 처리.
-    // 이상 없으면 삭제할 것.
-//    public Page<Board> 글목록조회(Pageable pageable) {
-//        return boardRepository.findAll(pageable);
-//    }
-
-    /* 글 제목 검색 */
-    @Transactional(readOnly = true)
-    public Page<Board> 제목검색(String title, Pageable pageable) {
-        Page<Board> boardList = boardRepository.findByTitleLike(title, pageable);
-
-        return boardList;
-    }
 
     /* @Query로 원하는 필드들만 조회하려는데 ConverterNotFoundException이 뜬다 */
     @Transactional(readOnly = true)

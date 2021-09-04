@@ -7,7 +7,6 @@ import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.service.BoardService;
 import com.jal.reboard.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class BoardController {
@@ -36,10 +34,12 @@ public class BoardController {
     PaginationService paginationService;
 
     @GetMapping({"/", "/list"})
-    public String list(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
-        BoardRfDTO dto = paginationService.페이지번호(pageable);
+    public String 전체글목록(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        BoardRfDTO dto = paginationService.페이지(pageable);
         model.addAttribute("boards", dto.getFindall());
         model.addAttribute("pageNums", dto.getPagination());
+
         return "board/boards";
     }
 
@@ -47,11 +47,11 @@ public class BoardController {
     @GetMapping("/list/search")
     public String 제목검색(String keyword, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
 
-        Page<Board> boards = boardService.제목검색("%"+keyword+"%", pageable);
-        List<Integer> pageNums = paginationService.제목검색페이지번호("%"+keyword+"%", pageable);
+        BoardRfDTO dto = paginationService.제목검색페이지("%"+keyword+"%", pageable);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("boards", boards);
-        model.addAttribute("pageNums", pageNums);
+        model.addAttribute("boards", dto.getFindall());
+        model.addAttribute("pageNums", dto.getPagination());
+
         return "board/srchBoards";
     }
 

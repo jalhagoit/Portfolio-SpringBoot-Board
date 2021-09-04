@@ -21,4 +21,9 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 
     Page<Board> findByTitleLike(String keyword, Pageable pageable);
 
+//    제목 두 단어 검색 테스트
+    @Query("SELECT b FROM Board b WHERE b.title LIKE CONCAT('%',:keyword1,'%') " +
+            "AND b.title LIKE CONCAT('%',:keyword2,'%')")
+    List<Board> findTwoWords(@Param("keyword1") String keyword1, @Param("keyword2") String keyword2);
+
 }
