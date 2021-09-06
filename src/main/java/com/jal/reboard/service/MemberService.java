@@ -44,6 +44,22 @@ public class MemberService {
         return dto;
     }
 
+    /* 비밀번호 변경 */
+    public boolean 비번변경(String username, String password, String newPwd) {
+        Member member = memberRepository.findMnoByUsername(username);
+
+        if(!passwordEncoder.matches(password, member.getPassword())){
+//            throw new RuntimeException("현재 비밀번호와 일치하지 않습니다");
+            return false;
+        } else {
+            String encodePassword = passwordEncoder.encode(newPwd);
+            member.setPassword(encodePassword);
+            memberRepository.save(member);
+            return true;
+        }
+
+    }
+
 
 
 }

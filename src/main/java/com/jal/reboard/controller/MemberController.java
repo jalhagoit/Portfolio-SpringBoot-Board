@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,6 +64,24 @@ public class MemberController {
 
         return "member/memberInfo";
     }
+
+    @GetMapping("/mem/changeInfo")
+    public String changePwdForm() {
+        return "member/changePwd";
+    }
+
+    @PutMapping("/mem/changeInfo")
+    public String changePwd(HttpServletRequest httpServletRequest, String password, String newPwd, RedirectAttributes redirectAttributes, Model model) {
+        String username = httpServletRequest.getUserPrincipal().getName();
+        if (memberService.비번변경(username, password, newPwd)) {
+            redirectAttributes.addFlashAttribute("msg", true);
+            return "redirect:/mem";
+        } else {
+            model.addAttribute("msg", true);
+            return "member/changePwd";
+        }
+    }
+
 
     /* 회원 작성글 페이지*/
     @GetMapping("/mem/boards")

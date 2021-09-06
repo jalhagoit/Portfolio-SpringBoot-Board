@@ -1,0 +1,75 @@
+<head th:replace="fragments/header :: header">
+    <!--    <div th:replace="fragments/header :: header"></div>-->
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!--<div th:replace="fragments/navbar :: navbar"></div>-->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!--content-->
+
+<div class="container px-5 pt-5 m-5">
+
+    <div class="container mt-3 px-5">
+        <div>
+            <main>
+
+                <form th:action="@{/mem/changeInfo}" th:method="put" class="needs-validation" novalidate>
+                    <div class="card w-50">
+                        <div class="card-header blockquote p-3">
+                            비밀번호 변경
+                        </div>
+                        <div class="card-body mb-3">
+                            <div>
+                                <div th:if="${msg}" class="alert alert-danger alert-dismissible" role="alert" id="liveAlert">
+                                    <strong>!</strong> 입력하신 비밀번호가 기존 비밀번호와 일치하지 않습니다.
+                                </div>
+                                <label class="form-label mt-2" for="password">현재 비밀번호</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="현재 비밀번호를 입력해 주세요" required>
+                                <div class="invalid-feedback">
+                                    Please provide Password.
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label mt-2" for="newPwd">새 비밀번호</label>
+                                <input type="password" class="form-control" id="newPwd" name="newPwd" placeholder="새 비밀번호를 입력해 주세요" required>
+                                <div class="invalid-feedback">
+                                    Please provide Password.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer py-3">
+                            <button id="btn-signup" class="btn btn-primary" type="submit">변경</button>
+                        </div>
+                    </div>
+                </form>
+
+            </main>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-- th:replace="fragment 위치 :: fragment명" -->
+<!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->

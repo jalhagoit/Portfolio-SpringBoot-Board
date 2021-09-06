@@ -23,7 +23,11 @@
                     <div>
                         <ul class="list-group">
                             <li class="list-group-item">Username : [[${#httpServletRequest.getUserPrincipal().getPrincipal().getUsername}]]</li>
-                            <li class="list-group-item">Password : <a href="/mem/changeInfo" class="card-link">변경</a></li>
+                            <li class="list-group-item">
+                                <div th:if="${msg}" class="alert alert-primary alert-dismissible" role="alert" id="liveAlert">
+                                    <strong>완료!</strong> 비밀번호가 변경되었습니다.
+                                </div>
+                                Password : <a href="/mem/changeInfo" class="card-link">변경</a></li>
                             <li class="list-group-item disabled" aria-disabled="true">가입일 : [[${#temporals.format(regDate, 'yyyy-MM-dd HH:mm:SS')}]]</li>
                         </ul>
                     </div>
