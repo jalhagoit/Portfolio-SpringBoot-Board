@@ -5,6 +5,7 @@ import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.RoleType;
 import com.jal.reboard.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +15,17 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-//    @Autowired
-//    private BCryptPasswordEncoder encoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /* 회원가입 */
     @Transactional
     public void 회원가입(Member member) {
+        String encodePassword = passwordEncoder.encode(member.getPassword());
+
         member.setRoleType(RoleType.USER);
+        member.setPassword(encodePassword);
+
         memberRepository.save(member);
     }
 
