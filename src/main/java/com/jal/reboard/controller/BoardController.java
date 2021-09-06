@@ -78,9 +78,12 @@ public class BoardController {
     }
 
     @DeleteMapping("/board/{bno}")
-    public String removeBoard(@PathVariable Long bno){
-        boardService.글삭제(bno);
-        return "redirect:/list";
+    public String removeBoard(HttpServletRequest httpServletRequest, @PathVariable Long bno){
+        if (boardService.작성자일치확인(bno, httpServletRequest)) {
+            boardService.글삭제(bno);
+            return "redirect:/list";
+        }
+        return "/board/{bno}";
     }
 
     @GetMapping("/board/modify/{bno}")
