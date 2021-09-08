@@ -36,18 +36,21 @@ public class MemberController {
 
     @PostMapping("/register")
     public String registerPost(String username, String password, Model model, Member member) {
-        if (!Pattern.matches("^[a-z]{1}[a-z0-9]{3,19}$", username)
-        ||!Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", password)) {
+        if (Pattern.matches("^[a-z]{1}[a-z0-9]{3,19}$", username)
+        &&Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", password)) {
             // "\\w+@\\w+\\.\\w+(\\.\\w+)?"; //이메일
+            if (memberService.username중복확인(username)) {
+                model.addAttribute("msg", "이미 존재하는 Username입니다.");
+                return "member/registerForm";
+            } else {
+                memberService.회원가입(member);
+                return "member/registerConfirmPage";
+//        return "checkEmailForRegister";
+            }
+
+        } else {
             model.addAttribute("msg", "Username 또는 Password가 양식에 맞지 않습니다.");
             return "member/registerForm";
-        } else if (memberService.username중복확인(username)) {
-            model.addAttribute("msg", "이미 존재하는 Username입니다.");
-            return "member/registerForm";
-        } else {
-            memberService.회원가입(member);
-            return "member/registerConfirmPage";
-//        return "checkEmailForRegister";
         }
 
     }
