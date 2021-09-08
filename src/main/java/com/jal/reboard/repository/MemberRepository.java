@@ -10,4 +10,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT m FROM Member m WHERE m.username = :username")
     Member findMnoByUsername(@Param("username") String dto);
 
+    boolean existsByUsername(String username);
+
 }

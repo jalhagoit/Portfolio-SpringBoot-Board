@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Pattern;
 
 @Controller
 public class MemberController {
@@ -34,10 +35,20 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String registerPost(Member member) {
-        memberService.회원가입(member);
-        return "member/registerConfirmPage";
+    public String registerPost(String username, String password, Model model, Member member) {
+        if (!Pattern.matches("^[a-z]{1}[a-z0-9]{3,19}$", username)
+        ||!Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", password)) {
+            // "\\w+@\\w+\\.\\w+(\\.\\w+)?"; //이메일
+            model.addAttribute("msg", "Username 또는 Password가 양식에 맞지 않습니다.");
+            return "member/registerForm";
+        } else if (memberService.username중복확인(username)) {
+            model.addAttribute("msg", "이미 존재하는 Username입니다.");
+            return "member/registerForm";
+        } else {
+            memberService.회원가입(member);
+            return "member/registerConfirmPage";
 //        return "checkEmailForRegister";
+        }
 
     }
 
@@ -55,7 +66,7 @@ public class MemberController {
     }
 
     /* 회원 페이지 */
-//    @PreAuthorize("isAuthenticated()") // 작동 안하는데???
+//    @PreAuthorize("isAuthenticated()") // 작동 안하는데??? <- true로 설정해 줘야 함.
     @GetMapping("/mem")
     public String memInfo(HttpServletRequest httpServletRequest, Model model) {
         String username = httpServletRequest.getUserPrincipal().getName();

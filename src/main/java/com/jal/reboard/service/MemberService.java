@@ -29,6 +29,12 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    /* username 중복 확인*/
+    @Transactional(readOnly = true)
+    public boolean username중복확인(String username) {
+        return memberRepository.existsByUsername(username);
+    }
+
 
     /* 로그인 */
 
