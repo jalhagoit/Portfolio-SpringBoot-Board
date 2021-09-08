@@ -54,14 +54,14 @@ public class MemberService {
     public boolean 비번변경(String username, String password, String newPwd) {
         Member member = memberRepository.findMnoByUsername(username);
 
-        if(!passwordEncoder.matches(password, member.getPassword())){
-//            throw new RuntimeException("현재 비밀번호와 일치하지 않습니다");
-            return false;
-        } else {
+        if(passwordEncoder.matches(password, member.getPassword())){
             String encodePassword = passwordEncoder.encode(newPwd);
             member.setPassword(encodePassword);
             memberRepository.save(member);
             return true;
+        } else {
+            //            throw new RuntimeException("현재 비밀번호와 일치하지 않습니다");
+            return false;
         }
 
     }

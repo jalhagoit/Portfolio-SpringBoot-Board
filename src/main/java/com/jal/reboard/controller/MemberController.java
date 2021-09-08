@@ -83,12 +83,18 @@ public class MemberController {
 
     @PutMapping("/mem/changeInfo")
     public String changePwd(HttpServletRequest httpServletRequest, String password, String newPwd, RedirectAttributes redirectAttributes, Model model) {
-        String username = httpServletRequest.getUserPrincipal().getName();
-        if (memberService.비번변경(username, password, newPwd)) {
-            redirectAttributes.addFlashAttribute("msg", true);
-            return "redirect:/mem";
+        if (Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", newPwd)) {
+            String username = httpServletRequest.getUserPrincipal().getName();
+            if (memberService.비번변경(username, password, newPwd)) {
+                redirectAttributes.addFlashAttribute("msg", true);
+                return "redirect:/mem";
+            } else {
+                model.addAttribute("msg", "입력하신 비밀번호가 기존 비밀번호와 일치하지 않습니다.");
+                return "member/changePwd";
+            }
+
         } else {
-            model.addAttribute("msg", true);
+            model.addAttribute("msg", "입력하신 비밀번호가 양식에 맞지 않습니다.");
             return "member/changePwd";
         }
     }
