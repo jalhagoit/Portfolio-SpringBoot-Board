@@ -32,6 +32,14 @@
                         <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a></small>
                     </li>
                 </th:block>
+                <form th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">
+                    <div class="input-group my-3">
+                        <textarea class="form-control" name="content" placeholder="댓글 작성"></textarea>
+                        <input type="hidden" class="form-control" name="bno" th:value="${board.bno}">
+                        <button class="btn btn-primary" type="submit">등록</button>
+                    </div>
+                </form>
+<!--                <button onClick="window.location.reload()">새로고침</button>-->
             </ul>
         </div>
 

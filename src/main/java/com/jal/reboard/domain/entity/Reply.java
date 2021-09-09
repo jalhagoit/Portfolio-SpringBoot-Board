@@ -18,6 +18,7 @@ public class Reply { // 댓글은 작성, 삭제만 가능.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
 
+    @Column(length = 200)
     @NotBlank(message = "내용에 빈칸을 허용하지 않습니다.")
     private String content;
 
