@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -44,6 +46,10 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "mno")
     private Member member;
+
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    private List<Reply> replies = new ArrayList<>();
 
     //연관관계 설정
     public void setMember(Member member) {

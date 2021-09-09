@@ -23,7 +23,7 @@
                 <tbody>
                 <tr th:each="board: ${boards}" >
                     <td th:text="${board.bno}">Bno</td>
-                    <td><a th:href="@{'/board/' + ${board.bno}}">[[${board.title}]]</a></td>
+                    <td><a th:href="@{'/board/' + ${board.bno}}">[[${board.title}]]</a><th:block>&nbsp;</th:block><span th:if="${board.replies.size} &gt; 0" class="badge bg-warning text-dark" th:text="${board.replies.size}"></span></td>
                     <td><a href="#" class="text-reset">[[${board.member.username}]]</a></td>
                     <td th:text="${#temporals.format(board.creDate, 'yyyy-MM-dd HH:mm:SS')}">생성일</td>
                     <td th:text="${#temporals.format(board.modDate, 'yyyy-MM-dd HH:mm:SS')}">수정일</td>

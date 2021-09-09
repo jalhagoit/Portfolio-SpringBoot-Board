@@ -23,6 +23,16 @@
             <hr>
             <button class="btn btn-secondary" onclick="history.back()">목록</button>
             <!--    뒤로가기(history.back) 말고 /list/*로 가도록 변경해야 하나? -->
+            <hr>
+            <ul class="list-group pb-5">
+                <li class="list-group-item list-group-item-success">댓글</li>
+                <th:block th:each="reply : ${board.replies}">
+                    <li class="list-group-item">
+                        <p th:text="${reply.content}"></p>
+                        <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a></small>
+                    </li>
+                </th:block>
+            </ul>
         </div>
 
     </div>

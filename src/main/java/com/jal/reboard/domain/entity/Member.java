@@ -55,6 +55,11 @@ public class Member {
     @JsonIgnore
     private List<Board> boards = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @JsonIgnore
+    private List<Reply> replies = new ArrayList<>();
+
     public void addBoard(Board board) {
         this.boards.add(board);
         if (board.getMember() != this) { //무한루프 빠지지 않도록 체크

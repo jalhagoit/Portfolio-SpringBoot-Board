@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+//                .csrf().disable() // postman 작업 시
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/loginError")
