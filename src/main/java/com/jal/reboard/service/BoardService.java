@@ -8,6 +8,7 @@ import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import com.jal.reboard.repository.MemberRepository;
+import com.jal.reboard.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,9 @@ public class BoardService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    ReplyRepository replyRepository;
 
     /* 글 작성 */
     public void 글작성(Board board, BwriteDTO dto) {
@@ -75,6 +79,7 @@ public class BoardService {
     /* 글 삭제 */
     @Transactional
     public void 글삭제(Long bno) {
+        replyRepository.deleteByBno(bno);
         boardRepository.deleteById(bno);
     }
 
