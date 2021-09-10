@@ -29,7 +29,11 @@
                 <th:block th:each="reply : ${board.replies}">
                     <li class="list-group-item">
                         <p th:text="${reply.content}"></p>
-                        <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a></small>
+                        <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a>
+                            <form style='display:inline' th:action="@{'/replyWrite/' + ${board.bno} + '/' + ${reply.rno}}" th:method="delete" th:if="${#httpServletRequest.getUserPrincipal()} != null AND ${reply.member.username == #httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
+                                | <button type="submit" class="btn btn-outline-secondary btn-sm">삭제</button>
+                            </form>
+                        </small>
                     </li>
                 </th:block>
                 <form th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">

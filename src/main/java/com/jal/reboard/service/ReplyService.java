@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class ReplyService {
 
@@ -43,5 +45,31 @@ public class ReplyService {
                 .build();
 
         return dto1;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean 작성자일치확인(Long rno, HttpServletRequest httpServletRequest) {
+        String writer = replyRepository.findById(rno)
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("댓글 조회 실패 : rno를 찾을 수 없습니다.");
+                })
+                .getMember().getUsername();
+
+        try {
+            String username = httpServletRequest.getUserPrincipal().getName();
+            return writer.equals(username);
+        } catch (NullPointerException e) {
+            System.out.println("사용자가 로그인을 하지 않았습니다.");
+            return false;
+        } catch (Exception e) {
+            System.out.println("무슨 예외야?");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Transactional
+    public void 댓글삭제(Long rno) {
+        replyRepository.deleteById(rno);
     }
 }
