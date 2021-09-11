@@ -36,7 +36,7 @@
                         </small>
                     </li>
                 </th:block>
-                <form th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">
+                <form th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">
                     <div class="input-group my-3">
                         <textarea class="form-control" name="content" placeholder="댓글 작성"></textarea>
                         <input type="hidden" class="form-control" name="bno" th:value="${board.bno}">
