@@ -1,11 +1,14 @@
 package com.jal.reboard.domain.entity;
 
+import com.jal.reboard.domain.type.CType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -26,6 +29,9 @@ public class Reply { // 댓글은 작성, 삭제만 가능.
     @Column(updatable = false)
     private LocalDateTime creDate;
 
+    @Enumerated(EnumType.STRING)
+    private CType ctype;
+
 
     // 연관관계 맵핑
     @ManyToOne
@@ -35,6 +41,15 @@ public class Reply { // 댓글은 작성, 삭제만 가능.
     @ManyToOne
     @JoinColumn(name = "mno")
     private Member member;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
+    private Reply parent;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "parent")
+    private List<Reply> children = new ArrayList<>();
 
 
     // 연관관계 설정

@@ -3,6 +3,7 @@ package com.jal.reboard.service;
 import com.jal.reboard.domain.dto.ReplyDTO;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.entity.Reply;
+import com.jal.reboard.domain.type.CType;
 import com.jal.reboard.repository.BoardRepository;
 import com.jal.reboard.repository.MemberRepository;
 import com.jal.reboard.repository.ReplyRepository;
@@ -25,26 +26,32 @@ public class ReplyService {
     ReplyRepository replyRepository;
 
 //    @Transactional
-    public ReplyDTO 댓글작성(ReplyDTO dto) {
+    public void 댓글작성(ReplyDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
 
         Reply reply = Reply.builder()
                 .board(boardRepository.getById(dto.getBno())) // 글
                 .member(mno) // 댓글 작성자
                 .content(dto.getContent())
+                .ctype(CType.ONBOARD)
+                .parent(Reply.builder().rno(0L).build())
                 .build();
 
-        Reply reply1 = replyRepository.save(reply);
+        replyRepository.save(reply);
+    }
 
-        ReplyDTO dto1 = ReplyDTO.builder()
-                .rno(reply1.getRno())
-                .bno(reply1.getBoard().getBno())
-                .content(reply1.getContent())
-                .username(reply1.getMember().getUsername())
-                .creDate(reply1.getCreDate())
+    public void 대댓작성(ReplyDTO dto) {
+        Member mno = memberRepository.findMnoByUsername(dto.getUsername());
+
+        Reply reply = Reply.builder()
+                .board(boardRepository.getById(dto.getBno())) // 글
+                .member(mno) // 댓글 작성자
+                .content(dto.getContent())
+                .ctype(CType.ONBOARD)
+                .parent(dto.getParent())
                 .build();
 
-        return dto1;
+        replyRepository.save(reply);
     }
 
     @Transactional(readOnly = true)

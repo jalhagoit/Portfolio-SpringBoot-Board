@@ -23,6 +23,13 @@ public class ReplyController {
         return "redirect:/board/{bno}";
     }
 
+    @PostMapping("/rereplyWrite/{bno}")
+    public String rereplyWrite(HttpServletRequest httpServletRequest, ReplyDTO dto) {
+        dto.setUsername(httpServletRequest.getUserPrincipal().getName());
+        replyService.대댓작성(dto);
+        return "redirect:/board/{bno}";
+    }
+
     @DeleteMapping("/replyWrite/{bno}/{rno}")
     public String replyDelete(HttpServletRequest httpServletRequest, @PathVariable Long rno) {
 
