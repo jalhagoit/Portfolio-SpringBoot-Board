@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @Service
 public class ReplyService {
@@ -34,6 +35,7 @@ public class ReplyService {
                 .member(mno) // 댓글 작성자
                 .content(dto.getContent())
                 .ctype(CType.ONBOARD)
+                .delDate(null)
                 .parent(Reply.builder().rno(0L).build())
                 .build();
 
@@ -48,6 +50,7 @@ public class ReplyService {
                 .member(mno) // 댓글 작성자
                 .content(dto.getContent())
                 .ctype(CType.ONBOARD)
+                .delDate(null)
                 .parent(dto.getParent())
                 .build();
 
@@ -77,6 +80,16 @@ public class ReplyService {
 
     @Transactional
     public void 댓글삭제(Long rno) {
-        replyRepository.deleteById(rno);
+        if (replyRepository.findByParentLike(Reply.builder().rno(rno).build()).size() > 0) {
+
+            Reply reply = replyRepository.getById(rno);
+            reply.setCtype(CType.DELETED);
+            reply.setDelDate(LocalDateTime.now());
+
+            replyRepository.save(reply);
+
+        } else {
+            replyRepository.deleteById(rno);
+        }
     }
 }

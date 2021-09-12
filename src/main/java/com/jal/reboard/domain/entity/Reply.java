@@ -29,6 +29,8 @@ public class Reply { // 댓글은 작성, 삭제만 가능.
     @Column(updatable = false)
     private LocalDateTime creDate;
 
+    private LocalDateTime delDate;
+
     @Enumerated(EnumType.STRING)
     private CType ctype;
 
@@ -69,6 +71,14 @@ public class Reply { // 댓글은 작성, 삭제만 가능.
         if(!member.getReplies().contains(this)){
             member.getReplies().add(this);
         }
+    }
+
+    public void setCtype(CType ctype) {
+        this.ctype = ctype;
+    }
+
+    public void setDelDate(LocalDateTime delDate) {
+        this.delDate = delDate;
     }
 
 }
