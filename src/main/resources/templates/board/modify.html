@@ -15,11 +15,19 @@
 
     <div class="container px-5">
 
-        <form th:action="@{'/board/modify/' + ${board.bno}}" th:method="put">
+        <form class="needs-validation" novalidate th:action="@{'/board/modify/' + ${board.bno}}" th:method="put">
             <div class="mb-3">
-                <input type="text" name="title" class="form-control" th:value="${board.title}" placeholder="제목">
+                <input type="text" name="title" class="form-control" th:value="${board.title}" placeholder="제목" required>
+                <div class="invalid-feedback">
+                    제목을 입력해 주세요.
+                </div>
             </div>
-            <textarea class="form-control summernote" name="content">[[${board.content}]]</textarea>
+            <div>
+                <textarea class="form-control summernote" name="content" required>[[${board.content}]]</textarea>
+                <div class="invalid-feedback">
+                    내용을 입력해 주세요.
+                </div>
+            </div>
             <button class="btn btn-secondary mt-2" onclick="history.back()">취소</button>
             <!--    history.back 말고 /board/{bno}으로 가도록 변경해야 하나? -->
             <button class="btn btn-primary mt-2" type="submit">수정</button>
@@ -44,6 +52,28 @@
         ]
       });
     </script>
+<script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>
 <footer th:replace="fragments/footer :: footer"></footer>
 <!-- th:replace="fragment 위치 :: fragment명" -->
 <!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->

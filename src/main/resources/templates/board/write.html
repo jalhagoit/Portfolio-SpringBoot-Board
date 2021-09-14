@@ -15,11 +15,19 @@
 
     <div class="container px-5">
 
-        <form th:action="@{/write}" method="POST">
+        <form class="needs-validation" novalidate th:action="@{/write}" method="POST">
             <div class="mb-3">
-                <input type="text" name="title" class="form-control" placeholder="제목">
+                <input type="text" name="title" class="form-control" placeholder="제목" required>
+                <div class="invalid-feedback">
+                    제목을 입력해 주세요.
+                </div>
             </div>
-            <textarea class="form-control summernote" name="content"></textarea>
+            <div>
+                <textarea class="form-control summernote" name="content" required></textarea>
+                <div class="invalid-feedback">
+                    내용을 입력해 주세요.
+                </div>
+            </div>
             <input type="hidden" class="form-control" name="username" th:value="${#httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
             <button id="btn-cancel" class="btn btn-secondary mt-2" onclick="history.back()">취소</button>
             <button id="btn-write" class="btn btn-primary mt-2" type="submit">완료</button>
@@ -44,6 +52,28 @@
         ]
       });
     </script>
+<script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>
 <footer th:replace="fragments/footer :: footer"></footer>
 <!-- th:replace="fragment 위치 :: fragment명" -->
 <!-- th:replace는 해당 태그에 fragment로 선언한 코드로 바꾼다는 의미 -->

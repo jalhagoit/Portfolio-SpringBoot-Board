@@ -45,12 +45,15 @@
                                         대댓
                                     </a>
                                     <div class="collapse" id="collapseExample">
-                                        <form th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/rereplyWrite/' + ${board.bno}}" method="POST">
+                                        <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/rereplyWrite/' + ${board.bno}}" method="POST">
                                             <div class="input-group my-3">
-                                                <textarea class="form-control" name="content" placeholder="대댓"></textarea>
+                                                <textarea class="form-control" name="content" placeholder="대댓" required></textarea>
                                                 <input type="hidden" class="form-control" name="bno" th:value="${board.bno}">
                                                 <input type="hidden" class="form-control" name="parent" th:value="${reply.rno}">
                                                 <button class="btn btn-primary" type="submit">등록</button>
+                                                <div class="invalid-feedback">
+                                                    댓글을 입력해 주세요.
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -69,11 +72,14 @@
                         </li>
                     </th:block>
                 </th:block>
-                <form th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">
+                <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">
                     <div class="input-group my-3">
-                        <textarea class="form-control" name="content" placeholder="댓글 작성"></textarea>
+                        <textarea class="form-control" name="content" placeholder="댓글 작성" required></textarea>
                         <input type="hidden" class="form-control" name="bno" th:value="${board.bno}">
                         <button class="btn btn-primary" type="submit">등록</button>
+                        <div class="invalid-feedback">
+                            댓글을 입력해 주세요.
+                        </div>
                     </div>
                 </form>
 <!--                <button onClick="window.location.reload()">새로고침</button>-->
@@ -82,6 +88,29 @@
 
     </div>
 </main>
+
+<script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>
 
 <footer th:replace="fragments/footer :: footer"></footer>
 <!-- th:replace="fragment 위치 :: fragment명" -->
