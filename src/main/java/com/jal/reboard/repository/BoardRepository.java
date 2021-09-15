@@ -1,6 +1,7 @@
 package com.jal.reboard.repository;
 
 import com.jal.reboard.domain.entity.Board;
+import com.jal.reboard.domain.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,9 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     List<Board> findAllDesc();
 
     Page<Board> findByTitleLike(String keyword, Pageable pageable);
+
+    @Query("SELECT b FROM Board b WHERE b.member = :member")
+    Page<Board> findBnoByMember(@Param("member") Member member, Pageable pageable);
 
 //    제목 두 단어 검색 테스트
     @Query("SELECT b FROM Board b WHERE b.title LIKE CONCAT('%',:keyword1,'%') " +

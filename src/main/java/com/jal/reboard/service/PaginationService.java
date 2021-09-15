@@ -45,14 +45,16 @@ public class PaginationService {
     public BoardRfDTO 회원작성글페이지(String username, Pageable pageable) {
 
         Member member = memberRepository.findMnoByUsername(username);
-        List<Board> boards = member.getBoards();
+        Page<Board> page = boardRepository.findBnoByMember(member, pageable);
+//        List<Board> boards = member.getBoards();
+//
+//        //List<> -> Page<>
+//        int start = (int)pageable.getOffset();
+//        int end = Math.min((start + pageable.getPageSize()), boards.size());
+//        Page<Board> page = new PageImpl<>(boards.subList(start, end), pageable, boards.size());
+        // DESC 내림차순 정렬 안됨.
 
-        //List<> -> Page<>
-        int start = (int)pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), boards.size());
-        Page<Board> page = new PageImpl<>(boards.subList(start, end), pageable, boards.size());
-
-        return new BoardRfDTO(page, pagination(page)); // DESC 내림차순 정렬 안됨.
+        return new BoardRfDTO(page, pagination(page));
     }
 
 

@@ -107,7 +107,6 @@ public class MemberController {
     @GetMapping("/mem/boards")
     public String memBoards(HttpServletRequest httpServletRequest, Model model,
                             @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
-                            // direction 적용이 안 돼. DESC/ASC 둘 다 오름차순으로 출력됨.
         String username = httpServletRequest.getUserPrincipal().getName();
         BoardRfDTO dto = paginationService.회원작성글페이지(username, pageable);
         model.addAttribute("boards", dto.getFindall());
