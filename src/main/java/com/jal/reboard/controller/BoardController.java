@@ -33,8 +33,9 @@ public class BoardController {
     @Autowired
     PaginationService paginationService;
 
+    /* 전체 글목록 조회 */
     @GetMapping({"/", "/list"})
-    public String 전체글목록(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String boardListAll(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
 
         BoardRfDTO dto = paginationService.페이지(pageable);
         model.addAttribute("boards", dto.getFindall());
@@ -43,9 +44,9 @@ public class BoardController {
         return "board/boards";
     }
 
-
+    /* 제목 검색 */
     @GetMapping("/list/search")
-    public String 제목검색(String keyword, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
+    public String searchTitlle(String keyword, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
 
         BoardRfDTO dto = paginationService.제목검색페이지("%"+keyword+"%", pageable);
         model.addAttribute("keyword", keyword);
@@ -55,13 +56,14 @@ public class BoardController {
         return "board/srchBoards";
     }
 
-
+    /* 글 작성 페이지 */
     @PreAuthorize("isAuthenticated()") // 로그인 해야 해당 페이지로 넘어간다.
     @GetMapping("/write")
     public String writeForm(){
         return "board/write";
     }
 
+    /* 글 작성 */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String writePost(Board board, BwriteDTO dto, RedirectAttributes redirectAttributes) {
@@ -70,6 +72,7 @@ public class BoardController {
         return "redirect:/board/{bno}";
     }
 
+    /* 글 상세보기 */
     @GetMapping("/board/{bno}")
     public String findById(@PathVariable Long bno, Model model) {
         model.addAttribute("board", boardService.글상세보기(bno));
@@ -77,6 +80,7 @@ public class BoardController {
         return "board/detail";
     }
 
+    /* 글 삭제 */
     @DeleteMapping("/board/{bno}")
     public String removeBoard(HttpServletRequest httpServletRequest, @PathVariable Long bno){
         if (boardService.작성자일치확인(bno, httpServletRequest)) {
@@ -86,6 +90,7 @@ public class BoardController {
         return "/board/{bno}";
     }
 
+    /* 글 수정 페이지 */
     @GetMapping("/board/modify/{bno}")
     public String modifyForm(HttpServletRequest httpServletRequest, @PathVariable Long bno, Model model) {
         if (boardService.작성자일치확인(bno, httpServletRequest)) {
@@ -94,6 +99,7 @@ public class BoardController {
         } return "redirect:/list";
     }
 
+    /* 글 수정 */
     @PutMapping("/board/modify/{bno}") //post로도 수정 되는데???
     public String modifyBoard(BoardDTO dto) {
         boardService.글수정(dto);
