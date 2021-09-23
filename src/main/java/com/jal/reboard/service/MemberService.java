@@ -20,7 +20,7 @@ public class MemberService {
 
     /* 회원가입 */
     @Transactional
-    public void 회원가입(Member member) {
+    public void register(Member member) {
         String encodePassword = passwordEncoder.encode(member.getPassword());
 
         member.setRoleType(RoleType.USER);
@@ -31,15 +31,13 @@ public class MemberService {
 
     /* username 중복 확인*/
     @Transactional(readOnly = true)
-    public boolean username중복확인(String username) {
+    public boolean usernameDuplicationCheck(String username) {
         return memberRepository.existsByUsername(username);
     }
 
 
-    /* 로그인 */
-
     /* 회원 조회 */
-    public MemberInfoDTO 회원정보조회(String username) {
+    public MemberInfoDTO memberInfo(String username) {
         Member member = memberRepository.findMnoByUsername(username);
         MemberInfoDTO dto = MemberInfoDTO.builder()
                 .mno(member.getMno())
@@ -51,7 +49,7 @@ public class MemberService {
     }
 
     /* 비밀번호 변경 */
-    public boolean 비번변경(String username, String password, String newPwd) {
+    public boolean changePwd(String username, String password, String newPwd) {
         Member member = memberRepository.findMnoByUsername(username);
 
         if(passwordEncoder.matches(password, member.getPassword())){
@@ -65,7 +63,5 @@ public class MemberService {
         }
 
     }
-
-
 
 }

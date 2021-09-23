@@ -30,7 +30,7 @@ public class BoardService {
     ReplyRepository replyRepository;
 
     /* 글 작성 */
-    public void 글작성(Board board, BwriteDTO dto) {
+    public void writeBoard(Board board, BwriteDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
         board.setMember(mno);
         board.setCtype(CType.ONBOARD);
@@ -47,7 +47,7 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public boolean 작성자일치확인(Long bno, HttpServletRequest httpServletRequest) {
+    public boolean checkSameWriter(Long bno, HttpServletRequest httpServletRequest) {
         String writer = boardRepository.findById(bno)
                 .orElseThrow(()->{
                     return new IllegalArgumentException("글 상세보기 실패 : bno를 찾을 수 없습니다.");
@@ -69,7 +69,7 @@ public class BoardService {
 
     /* 글 조회 */
     @Transactional(readOnly = true)
-    public Board 글상세보기(Long bno) {
+    public Board viewBoard(Long bno) {
         return boardRepository.findById(bno)
                 .orElseThrow(()->{
                     return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다.");
@@ -78,7 +78,7 @@ public class BoardService {
 
     /* 글 삭제 */
     @Transactional
-    public void 글삭제(Long bno) {
+    public void deleteBoard(Long bno) {
         replyRepository.deleteByBno(bno);
         boardRepository.deleteById(bno);
     }
@@ -86,7 +86,7 @@ public class BoardService {
 
     /* 글 수정 */
     @Transactional
-    public void 글수정(BoardDTO boardDTO) {
+    public void modifyBoard(BoardDTO boardDTO) {
 
         Board board = boardRepository.getById(boardDTO.getBno());
 
@@ -96,15 +96,4 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-
-//    /* 작성자 추가 */
-//    @Transactional
-//    public void 작성자추가(BoardDTO boardDTO) {
-//
-//        Board board = boardRepository.getById(boardDTO.getBno());
-//
-//        board.changeWriter(boardDTO.getWriter());
-//
-//        boardRepository.save(board);
-//    }
 }

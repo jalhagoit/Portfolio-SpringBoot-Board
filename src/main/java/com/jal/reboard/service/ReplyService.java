@@ -26,8 +26,7 @@ public class ReplyService {
     @Autowired
     ReplyRepository replyRepository;
 
-//    @Transactional
-    public void 댓글작성(ReplyDTO dto) {
+    public void replyWrite(ReplyDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
 
         Reply reply = Reply.builder()
@@ -42,7 +41,7 @@ public class ReplyService {
         replyRepository.save(reply);
     }
 
-    public void 대댓작성(ReplyDTO dto) {
+    public void reReplyWrite(ReplyDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
 
         Reply reply = Reply.builder()
@@ -58,7 +57,7 @@ public class ReplyService {
     }
 
     @Transactional(readOnly = true)
-    public boolean 작성자일치확인(Long rno, HttpServletRequest httpServletRequest) {
+    public boolean checkSameWriter(Long rno, HttpServletRequest httpServletRequest) {
         String writer = replyRepository.findById(rno)
                 .orElseThrow(()->{
                     return new IllegalArgumentException("댓글 조회 실패 : rno를 찾을 수 없습니다.");
@@ -79,7 +78,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public void 댓글삭제(Long rno) {
+    public void replyDelete(Long rno) {
         if (replyRepository.findByParentLike(Reply.builder().rno(rno).build()).size() > 0) {
 
             Reply reply = replyRepository.getById(rno);

@@ -7,7 +7,6 @@ import com.jal.reboard.repository.BoardRepository;
 import com.jal.reboard.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +25,7 @@ public class PaginationService {
     MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public BoardRfDTO 페이지(Pageable pageable) {
+    public BoardRfDTO boardListAll(Pageable pageable) {
 
         Page<Board> fa = boardRepository.findAll(pageable);
 
@@ -34,7 +33,7 @@ public class PaginationService {
     }
 
     @Transactional(readOnly = true)
-    public BoardRfDTO 제목검색페이지(String title, Pageable pageable) {
+    public BoardRfDTO searchTitleList(String title, Pageable pageable) {
 
         Page<Board> ft = boardRepository.findByTitleLike(title, pageable);
 
@@ -42,17 +41,10 @@ public class PaginationService {
     }
 
     @Transactional(readOnly = true)
-    public BoardRfDTO 회원작성글페이지(String username, Pageable pageable) {
+    public BoardRfDTO memberWrittenBoardList(String username, Pageable pageable) {
 
         Member member = memberRepository.findMnoByUsername(username);
         Page<Board> page = boardRepository.findBnoByMember(member, pageable);
-//        List<Board> boards = member.getBoards();
-//
-//        //List<> -> Page<>
-//        int start = (int)pageable.getOffset();
-//        int end = Math.min((start + pageable.getPageSize()), boards.size());
-//        Page<Board> page = new PageImpl<>(boards.subList(start, end), pageable, boards.size());
-        // DESC 내림차순 정렬 안됨.
 
         return new BoardRfDTO(page, pagination(page));
     }

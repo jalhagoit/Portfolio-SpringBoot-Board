@@ -19,22 +19,22 @@ public class ReplyController {
     @PostMapping("/replyWrite/{bno}")
     public String replyWrite(HttpServletRequest httpServletRequest, ReplyDTO dto) {
         dto.setUsername(httpServletRequest.getUserPrincipal().getName());
-        replyService.댓글작성(dto);
+        replyService.replyWrite(dto);
         return "redirect:/board/{bno}";
     }
 
     @PostMapping("/rereplyWrite/{bno}")
     public String rereplyWrite(HttpServletRequest httpServletRequest, ReplyDTO dto) {
         dto.setUsername(httpServletRequest.getUserPrincipal().getName());
-        replyService.대댓작성(dto);
+        replyService.reReplyWrite(dto);
         return "redirect:/board/{bno}";
     }
 
     @DeleteMapping("/replyWrite/{bno}/{rno}")
     public String replyDelete(HttpServletRequest httpServletRequest, @PathVariable Long rno) {
 
-        if (replyService.작성자일치확인(rno, httpServletRequest)) {
-            replyService.댓글삭제(rno);
+        if (replyService.checkSameWriter(rno, httpServletRequest)) {
+            replyService.replyDelete(rno);
         }
         return "redirect:/board/{bno}";
 
