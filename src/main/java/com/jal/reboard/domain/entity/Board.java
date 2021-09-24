@@ -70,9 +70,5 @@ public class Board {
         this.content = content;
     }
 
-//    public void changeWriter(Long writer){
-//        this.writer = writer;
-//    }
-
 
 }

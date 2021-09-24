@@ -38,14 +38,14 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li th:class="${boards.first}? 'page-item disabled' : 'page-item'">
-                        <a class="page-link" th:href="@{'/list/search?keyword=' + ${keyword} + '&page=' + ${boards.number-1}}">Prev</a>
+                        <a class="page-link" th:href="@{'/list/search?searchType=' + ${searchType} + '&keyword=' + ${keyword} + '&page=' + ${boards.number-1}}">Prev</a>
                     </li>
 
-                    <li th:each="pageNum : ${pageNums}" th:class="${pageNum == boards.number}? 'page-item active' : 'page-item'" aria-current="page"><a class="page-link" th:href="@{'/list/search?keyword=' + ${keyword} + '&page=' + ${pageNum}}">[[${pageNum+1}]]</a></li>
+                    <li th:each="pageNum : ${pageNums}" th:class="${pageNum == boards.number}? 'page-item active' : 'page-item'" aria-current="page"><a class="page-link" th:href="@{'/list/search?searchType=' + ${searchType} + '&keyword=' + ${keyword} + '&page=' + ${pageNum}}">[[${pageNum+1}]]</a></li>
 
 
                     <li th:class="${boards.last}? 'page-item disabled' : 'page-item'">
-                        <a class="page-link" th:href="@{'/list/search?keyword=' + ${keyword} + '&page=' + ${boards.number+1}}">Next</a>
+                        <a class="page-link" th:href="@{'/list/search?searchType=' + ${searchType} + '&keyword=' + ${keyword} + '&page=' + ${boards.number+1}}">Next</a>
                     </li>
                 </ul>
             </nav>

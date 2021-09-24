@@ -33,10 +33,16 @@ public class PaginationService {
     }
 
     @Transactional(readOnly = true)
-    public BoardRfDTO searchTitleList(String title, Pageable pageable) {
+    public BoardRfDTO searchList(String searchType, String title, Pageable pageable) {
 
-        Page<Board> ft = boardRepository.findByTitleLike(title, pageable);
-
+        Page<Board> ft = null;
+        
+        if (searchType.equals("t")) {
+            ft = boardRepository.findByTitleLike(title, pageable);
+        } else if (searchType.equals("c")) {
+            ft = boardRepository.findByContentLike(title, pageable);
+        }
+        
         return new BoardRfDTO(ft, pagination(ft));
     }
 

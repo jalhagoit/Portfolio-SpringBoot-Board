@@ -41,9 +41,10 @@ public class BoardController {
 
     /* 제목 검색 */
     @GetMapping("/list/search")
-    public String searchTitlle(String keyword, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
+    public String searchTitlle(String keyword, String searchType, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
 
-        BoardRfDTO dto = paginationService.searchTitleList("%"+keyword+"%", pageable);
+        BoardRfDTO dto = paginationService.searchList(searchType, "%"+keyword+"%", pageable);
+        model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
         model.addAttribute("boards", dto.getFindall());
         model.addAttribute("pageNums", dto.getPagination());

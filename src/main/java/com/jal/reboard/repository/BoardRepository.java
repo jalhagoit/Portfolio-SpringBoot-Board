@@ -16,7 +16,9 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 //    @Query("SELECT b.bno, b.title, b.modDate, b.member.mno FROM Board b ORDER BY b.bno DESC")
     List<Board> findAllDesc();
 
-    Page<Board> findByTitleLike(String keyword, Pageable pageable);
+    Page<Board> findByTitleLike(String keyword, Pageable pageable); // 제목 검색
+    Page<Board> findByContentLike(String keyword, Pageable pageable); // 내용 검색
+//    Page<Board> findByTitleOrContentLike(String keyword, Pageable pageable); // 제목 or 내용 검색
 
     @Query("SELECT b FROM Board b WHERE b.member = :member")
     Page<Board> findBnoByMember(@Param("member") Member member, Pageable pageable);
