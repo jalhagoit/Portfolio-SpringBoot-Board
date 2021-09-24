@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +38,9 @@ public class BoardController {
         return "board/boards";
     }
 
-    /* 제목 검색 */
+    /* 검색 */
     @GetMapping("/list/search")
-    public String searchTitlle(String keyword, String searchType, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
+    public String searchBoards(String keyword, String searchType, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
 
         BoardRfDTO dto = paginationService.searchList(searchType, "%"+keyword+"%", pageable);
         model.addAttribute("searchType", searchType);
