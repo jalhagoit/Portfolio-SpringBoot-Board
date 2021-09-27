@@ -27,55 +27,24 @@
             <ul class="list-group pb-5">
                 <li class="list-group-item list-group-item-success">댓글</li>
                 <th:block th:each="reply : ${board.replies}">
-                    <li class="list-group-item" th:if="${reply.parent.rno == 0}">
-<!--                        <div class="mb-1" th:text="(${#strings.toString(reply.ctype)} == 'DELETED')? '삭제된 댓글입니다.': ${reply.content}"></div>-->
-                        <th:block th:if="(${#strings.toString(reply.ctype)} == 'DELETED')">
-                            <div class="mb-1 text-muted">삭제된 댓글입니다.</div>
-                            <small class="pb-2 text-muted"> 삭제일: [[${#temporals.format(reply.delDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a></small>
-                        </th:block>
-                        <th:block th:if="(${#strings.toString(reply.ctype)} == 'ONBOARD')">
-                            <div class="mb-1" th:text="${reply.content}"></div>
-                            <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a>
-                                <form style='display:inline' th:action="@{'/replyWrite/' + ${board.bno} + '/' + ${reply.rno}}" th:method="delete" th:if="${#httpServletRequest.getUserPrincipal()} != null AND ${reply.member.username == #httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
-                                    | <button type="submit" class="btn btn-outline-secondary btn-sm">삭제</button>
-                                </form>
-                                <th:block th:if="${#httpServletRequest.getUserPrincipal()}">
-                                    |
-                                    <a data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                        대댓
-                                    </a>
-                                    <div class="collapse" id="collapseExample">
-                                        <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/rereplyWrite/' + ${board.bno}}" method="POST">
-                                            <div class="input-group my-3">
-                                                <textarea class="form-control" name="content" placeholder="대댓" required></textarea>
-                                                <input type="hidden" class="form-control" name="bno" th:value="${board.bno}">
-                                                <input type="hidden" class="form-control" name="parent" th:value="${reply.rno}">
-                                                <button class="btn btn-primary" type="submit">등록</button>
-                                                <div class="invalid-feedback">
-                                                    댓글을 입력해 주세요.
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </th:block>
-                            </small>
-                        </th:block>
+                    <li class="list-group-item" th:if="${reply.depth == 0}">
+                        <th:block th:replace="fragments/reply :: reply"></th:block>
                     </li>
                     <th:block th:each="reply : ${reply.children}">
-                        <li class="list-group-item ps-5">
-                            <div class="mb-1" th:text="${reply.content}"></div>
-                            <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a>
-                                <form style='display:inline' th:action="@{'/replyWrite/' + ${board.bno} + '/' + ${reply.rno}}" th:method="delete" th:if="${#httpServletRequest.getUserPrincipal()} != null AND ${reply.member.username == #httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
-                                    | <button type="submit" class="btn btn-outline-secondary btn-sm">삭제</button>
-                                </form>
-                            </small>
+                        <li class="list-group-item ps-4" th:if="${reply.depth == 1}">
+                            <th:block th:replace="fragments/reply :: reply"></th:block>
                         </li>
+                        <th:block th:each="reply : ${reply.children}">
+                            <li class="list-group-item ps-5" th:if="${reply.depth == 2}">
+                                <th:block th:replace="fragments/reply :: reply"></th:block>
+                            </li>
+                        </th:block>
                     </th:block>
                 </th:block>
-                <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/replyWrite/' + ${board.bno}}" method="POST">
+                <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/replyWrite/' + ${bno}}" method="POST">
                     <div class="input-group my-3">
                         <textarea class="form-control" name="content" placeholder="댓글 작성" required></textarea>
-                        <input type="hidden" class="form-control" name="bno" th:value="${board.bno}">
+                        <input type="hidden" class="form-control" name="bno" th:value="${bno}">
                         <button class="btn btn-primary" type="submit">등록</button>
                         <div class="invalid-feedback">
                             댓글을 입력해 주세요.

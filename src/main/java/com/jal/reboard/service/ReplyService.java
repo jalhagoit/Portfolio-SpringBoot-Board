@@ -26,6 +26,7 @@ public class ReplyService {
     @Autowired
     ReplyRepository replyRepository;
 
+    /* 댓 작성 */
     public void replyWrite(ReplyDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
 
@@ -35,27 +36,32 @@ public class ReplyService {
                 .content(dto.getContent())
                 .ctype(CType.ONBOARD)
                 .delDate(null)
-                .parent(Reply.builder().rno(0L).build())
+                .depth(0)
                 .build();
 
         replyRepository.save(reply);
     }
 
+    /* 대댓 작성 */
     public void reReplyWrite(ReplyDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
 
-        Reply reply = Reply.builder()
-                .board(boardRepository.getById(dto.getBno())) // 글
-                .member(mno) // 댓글 작성자
-                .content(dto.getContent())
-                .ctype(CType.ONBOARD)
-                .delDate(null)
-                .parent(dto.getParent())
-                .build();
+        if (dto.getParent().getCtype() == CType.ONBOARD && dto.getParent().getDepth() < 2) {
+            Reply reply = Reply.builder()
+                    .board(boardRepository.getById(dto.getBno())) // 글
+                    .member(mno) // 댓글 작성자
+                    .content(dto.getContent())
+                    .ctype(CType.ONBOARD)
+                    .delDate(null)
+                    .parent(dto.getParent())
+                    .depth(dto.getParent().getDepth()+1)
+                    .build();
 
-        replyRepository.save(reply);
+            replyRepository.save(reply);
+        }
     }
 
+    /* 댓글 작성자 일치 확인 */
     @Transactional(readOnly = true)
     public boolean checkSameWriter(Long rno, HttpServletRequest httpServletRequest) {
         String writer = replyRepository.findById(rno)
@@ -77,6 +83,7 @@ public class ReplyService {
         }
     }
 
+    /* 댓글 삭제 */
     @Transactional
     public void replyDelete(Long rno) {
         if (replyRepository.findByParentLike(Reply.builder().rno(rno).build()).size() > 0) {

@@ -1,0 +1,35 @@
+   <!--Submit Reply-->
+   <th:block th:fragment="reply">
+       <th:block th:if="(${#strings.toString(reply.ctype)} == 'DELETED')">
+           <div class="mb-1 text-muted">삭제된 댓글입니다.</div>
+           <small class="pb-2 text-muted"> 삭제일: [[${#temporals.format(reply.delDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a></small>
+       </th:block>
+       <th:block th:if="(${#strings.toString(reply.ctype)} == 'ONBOARD')">
+           <div class="mb-1" th:text="${reply.content}"></div>
+           <small class="pb-2 text-muted"> 생성일: [[${#temporals.format(reply.creDate, 'yyyy-MM-dd HH:mm:SS')}]] | 작성자: <a href="#" class="text-reset">[[${reply.member.username}]]</a>
+               <form style='display:inline' th:action="@{'/replyWrite/' + ${bno} + '/' + ${reply.rno}}" th:method="delete" th:if="${#httpServletRequest.getUserPrincipal()} != null AND ${reply.member.username == #httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
+                   | <button type="submit" class="btn btn-outline-secondary btn-sm">삭제</button>
+               </form>
+               <th:block th:if="${#httpServletRequest.getUserPrincipal()} AND (${reply.depth} < 2)">
+                       |
+                       <a data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                           대댓
+                       </a>
+                       <div class="collapse" id="collapseExample">
+                           <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/rereplyWrite/' + ${bno}}" method="POST">
+                               <div class="input-group my-3">
+                                   <textarea class="form-control" name="content" placeholder="대댓" required></textarea>
+                                   <input type="hidden" class="form-control" name="bno" th:value="${bno}">
+                                   <input type="hidden" class="form-control" name="parent" th:value="${reply.rno}">
+                                   <button class="btn btn-primary" type="submit">등록</button>
+                                   <div class="invalid-feedback">
+                                       댓글을 입력해 주세요.
+                                   </div>
+                               </div>
+                           </form>
+                       </div>
+               </th:block>
+           </small>
+       </th:block>
+   </th:block>
+

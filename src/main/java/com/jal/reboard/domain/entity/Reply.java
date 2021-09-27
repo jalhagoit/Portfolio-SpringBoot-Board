@@ -53,6 +53,8 @@ public class Reply { // 댓글은 작성, 삭제만 가능.
     @OneToMany(mappedBy = "parent")
     private List<Reply> children = new ArrayList<>();
 
+    private int depth;
+
 
     // 연관관계 설정
     public void setBoard(Board board) {
