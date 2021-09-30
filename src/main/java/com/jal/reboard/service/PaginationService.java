@@ -27,25 +27,25 @@ public class PaginationService {
     @Transactional(readOnly = true)
     public BoardRfDTO boardListAll(Pageable pageable) {
 
-        Page<Board> fa = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findAll(pageable);
 
-        return new BoardRfDTO(fa, pagination(fa));
+        return new BoardRfDTO(boards, pagination(boards));
     }
 
     @Transactional(readOnly = true)
     public BoardRfDTO searchList(String searchType, String keyword, Pageable pageable) {
 
-        Page<Board> ft = null;
+        Page<Board> findBoard = null;
         
         if (searchType.equals("t")) {
-            ft = boardRepository.findByTitleLike(keyword, pageable);
+            findBoard = boardRepository.findByTitleLike(keyword, pageable);
         } else if (searchType.equals("c")) {
-            ft = boardRepository.findByContentLike(keyword, pageable);
+            findBoard = boardRepository.findByContentLike(keyword, pageable);
         } else if (searchType.equals("tc")) {
-            ft = boardRepository.findByTitleLikeOrContentLike(keyword, keyword, pageable);
+            findBoard = boardRepository.findByTitleLikeOrContentLike(keyword, keyword, pageable);
         }
 
-        return new BoardRfDTO(ft, pagination(ft));
+        return new BoardRfDTO(findBoard, pagination(findBoard));
     }
 
     @Transactional(readOnly = true)
@@ -60,10 +60,10 @@ public class PaginationService {
 
 
     /* 페이지 번호 계산 */
-    public List<Integer> pagination(Page<Board> fa ) {
+    public List<Integer> pagination(Page<Board> findBoard ) {
 
-        int presentPage = fa.getNumber();
-        int totalPage = fa.getTotalPages();
+        int presentPage = findBoard.getNumber();
+        int totalPage = findBoard.getTotalPages();
 
         int prev, next;
 
