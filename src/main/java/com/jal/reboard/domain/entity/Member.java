@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Entity
 public class Member {
 
@@ -65,6 +64,10 @@ public class Member {
         if (board.getMember() != this) { //무한루프 빠지지 않도록 체크
             board.setMember(this);
         }
+    }
+
+    public void setPassword(String encodePassword){
+        this.password = encodePassword;
     }
 
 }

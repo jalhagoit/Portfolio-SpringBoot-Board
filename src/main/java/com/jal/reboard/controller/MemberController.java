@@ -1,8 +1,8 @@
 package com.jal.reboard.controller;
 
 import com.jal.reboard.domain.dto.BoardRfDTO;
+import com.jal.reboard.domain.dto.MemberDTO;
 import com.jal.reboard.domain.dto.MemberInfoDTO;
-import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.service.MemberService;
 import com.jal.reboard.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String registerPost(String username, String password, Model model, Member member) {
+    public String registerPost(String username, String password, Model model, MemberDTO dto) {
         if (Pattern.matches("^[a-z]{1}[a-z0-9]{3,19}$", username)
         &&Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", password)) {
             // "\\w+@\\w+\\.\\w+(\\.\\w+)?"; //이메일
@@ -42,7 +42,7 @@ public class MemberController {
                 model.addAttribute("msg", "이미 존재하는 Username입니다.");
                 return "member/registerForm";
             } else {
-                memberService.register(member);
+                memberService.register(dto);
                 return "member/registerConfirmPage";
 //        return "checkEmailForRegister";
             }

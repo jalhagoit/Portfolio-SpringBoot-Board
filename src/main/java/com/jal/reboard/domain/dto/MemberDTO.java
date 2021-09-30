@@ -3,11 +3,13 @@ package com.jal.reboard.domain.dto;
 import com.jal.reboard.domain.type.RoleType;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Builder
-@Data
+@Getter
+@Setter
 public class MemberDTO {
 
     private Long mno;

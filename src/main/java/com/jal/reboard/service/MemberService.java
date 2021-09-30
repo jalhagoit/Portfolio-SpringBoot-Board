@@ -1,5 +1,6 @@
 package com.jal.reboard.service;
 
+import com.jal.reboard.domain.dto.MemberDTO;
 import com.jal.reboard.domain.dto.MemberInfoDTO;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.RoleType;
@@ -20,11 +21,14 @@ public class MemberService {
 
     /* 회원가입 */
     @Transactional
-    public void register(Member member) {
-        String encodePassword = passwordEncoder.encode(member.getPassword());
+    public void register(MemberDTO dto) {
+        String encodePassword = passwordEncoder.encode(dto.getPassword());
 
-        member.setRoleType(RoleType.USER);
-        member.setPassword(encodePassword);
+        Member member = Member.builder()
+                .username(dto.getUsername())
+                .password(encodePassword)
+                .roleType(RoleType.USER)
+                .build();
 
         memberRepository.save(member);
     }
