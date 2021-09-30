@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Reply { // 댓글은 작성, 삭제만 가능.
+public class  Reply { // 댓글은 작성, 삭제만 가능.
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
