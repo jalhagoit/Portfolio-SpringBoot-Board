@@ -3,7 +3,6 @@ package com.jal.reboard.controller;
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.dto.BoardRfDTO;
 import com.jal.reboard.domain.dto.BwriteDTO;
-import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.service.BoardService;
 import com.jal.reboard.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +58,9 @@ public class BoardController {
 
     /* 글 작성 */
     @PostMapping("/write")
-    public String writePost(Board board, BwriteDTO dto, RedirectAttributes redirectAttributes) {
-        boardService.writeBoard(board, dto);
-        redirectAttributes.addAttribute("bno", board.getBno());
+    public String writePost(BwriteDTO dto, RedirectAttributes redirectAttributes) {
+        Long bno = boardService.writeBoard(dto);
+        redirectAttributes.addAttribute("bno", bno);
         return "redirect:/board/{bno}";
     }
 

@@ -30,11 +30,20 @@ public class BoardService {
     ReplyRepository replyRepository;
 
     /* 글 작성 */
-    public void writeBoard(Board board, BwriteDTO dto) {
+    public Long writeBoard(BwriteDTO dto) {
         Member mno = memberRepository.findMnoByUsername(dto.getUsername());
-        board.setMember(mno);
-        board.setCtype(CType.ONBOARD);
+
+        Board board = Board.builder()
+                .bno(dto.getBno())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .member(mno)
+                .ctype(CType.ONBOARD)
+                .build();
+
         boardRepository.save(board);
+
+        return board.getBno();
     }
 
 
