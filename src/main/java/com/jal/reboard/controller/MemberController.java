@@ -11,11 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
@@ -28,6 +30,7 @@ public class MemberController {
     @Autowired
     PaginationService paginationService;
 
+    /* 회원 가입 */
     @GetMapping("/register")
     public String registerForm() {
         return "member/registerForm";
@@ -54,13 +57,13 @@ public class MemberController {
 
     }
 
-    // Login form
+    /* 로그인 페이지 */
     @GetMapping("/login")
     public String login() {
         return "member/loginForm";
     }
 
-    // Login form with error
+    /* 로그인 에러 페이지 */
     @GetMapping("/loginError")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
@@ -110,6 +113,15 @@ public class MemberController {
         model.addAttribute("boards", dto.getFindall());
         model.addAttribute("pageNums", dto.getPagination());
         return "member/memberBoards";
+    }
+
+    /* 회원 탈퇴 */
+    @DeleteMapping("/mem/account")
+    public String deleteAccount(HttpServletRequest httpServletRequest) throws ServletException {
+        // TODO 삭제 전 비번 확인
+        memberService.deleteAccount(httpServletRequest);
+        httpServletRequest.logout();
+        return "redirect:/";
     }
 
 }

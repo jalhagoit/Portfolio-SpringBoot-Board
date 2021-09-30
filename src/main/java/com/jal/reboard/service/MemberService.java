@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class MemberService {
 
@@ -66,6 +68,13 @@ public class MemberService {
             return false;
         }
 
+    }
+
+    /* 회원 탈퇴 */
+    @Transactional
+    public void deleteAccount(HttpServletRequest httpServletRequest) {
+        String username = httpServletRequest.getUserPrincipal().getName();
+        memberRepository.deleteByUsername(username);
     }
 
 }

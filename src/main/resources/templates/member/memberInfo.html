@@ -29,6 +29,34 @@
                                 </div>
                                 Password : <a href="/mem/changeInfo" class="card-link">변경</a></li>
                             <li class="list-group-item disabled" aria-disabled="true">가입일 : [[${#temporals.format(regDate, 'yyyy-MM-dd HH:mm:SS')}]]</li>
+                            <li class="list-group-item">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    탈퇴
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">회원탈퇴</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                탈퇴하시겠습니까?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                                <form style='display:inline' th:action="@{mem/account}" th:method="delete">
+                                                    <button type="submit" class="btn btn-danger">탈퇴</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -55,6 +55,7 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    /* 작성자 일치 확인 */
     @Transactional(readOnly = true)
     public boolean checkSameWriter(Long bno, HttpServletRequest httpServletRequest) {
         String writer = boardRepository.findById(bno)
