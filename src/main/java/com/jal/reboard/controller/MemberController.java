@@ -5,6 +5,7 @@ import com.jal.reboard.domain.dto.MemberDTO;
 import com.jal.reboard.domain.dto.MemberInfoDTO;
 import com.jal.reboard.service.MemberService;
 import com.jal.reboard.service.PaginationService;
+import com.jal.reboard.service.RegexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.regex.Pattern;
 
 @Controller
 public class MemberController {
@@ -30,6 +30,9 @@ public class MemberController {
     @Autowired
     PaginationService paginationService;
 
+    @Autowired
+    RegexService regexService;
+
     /* 회원 가입 */
     @GetMapping("/register")
     public String registerForm() {
@@ -38,8 +41,8 @@ public class MemberController {
 
     @PostMapping("/register")
     public String registerPost(String username, String password, Model model, MemberDTO dto) {
-        if (Pattern.matches("^[a-z]{1}[a-z0-9]{3,19}$", username)
-        &&Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", password)) {
+        if (regexService.usernamePattern(username)
+                && regexService.passwordPattern(password)) {
             // "\\w+@\\w+\\.\\w+(\\.\\w+)?"; //이메일
             if (memberService.usernameDuplicationCheck(username)) {
                 model.addAttribute("msg", "이미 존재하는 Username입니다.");
@@ -87,7 +90,7 @@ public class MemberController {
 
     @PutMapping("/mem/changeInfo")
     public String changePwd(HttpServletRequest httpServletRequest, String password, String newPwd, RedirectAttributes redirectAttributes, Model model) {
-        if (Pattern.matches("^[A-Za-z\\d$@$!%*?&]{4,}$", newPwd)) {
+        if (regexService.passwordPattern(newPwd)) {
             String username = httpServletRequest.getUserPrincipal().getName();
             if (memberService.changePwd(username, password, newPwd)) {
                 redirectAttributes.addFlashAttribute("msg", true);
