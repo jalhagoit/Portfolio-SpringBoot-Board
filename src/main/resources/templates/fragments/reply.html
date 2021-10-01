@@ -12,10 +12,10 @@
                </form>
                <th:block th:if="${#httpServletRequest.getUserPrincipal()} AND (${reply.depth} < 2)">
                        |
-                       <a data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                       <a data-bs-toggle="collapse" th:href="@{'#collapse' + ${reply.rno}}" aria-expanded="false" aria-controls="collapseExample">
                            대댓
                        </a>
-                       <div class="collapse" id="collapseExample">
+                       <div class="collapse" th:id="'collapse' + ${reply.rno}">
                            <form class="needs-validation" novalidate th:if="${#httpServletRequest.getUserPrincipal()}" th:action="@{'/rereplyWrite/' + ${bno}}" method="POST">
                                <div class="input-group my-3">
                                    <textarea class="form-control" name="content" placeholder="대댓" required></textarea>
