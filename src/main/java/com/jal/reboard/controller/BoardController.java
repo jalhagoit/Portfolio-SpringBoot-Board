@@ -3,7 +3,7 @@ package com.jal.reboard.controller;
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.domain.dto.BoardRfDTO;
 import com.jal.reboard.domain.dto.BwriteDTO;
-import com.jal.reboard.service.BoardService;
+import com.jal.reboard.service.BoardServiceImpl;
 import com.jal.reboard.service.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,7 @@ public class BoardController {
 
 
     @Autowired
-    BoardService boardService;
+    BoardServiceImpl boardService;
 
     @Autowired
     PaginationService paginationService;

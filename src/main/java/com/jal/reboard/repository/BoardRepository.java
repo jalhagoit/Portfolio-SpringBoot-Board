@@ -12,10 +12,6 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
-    @Query("SELECT b FROM Board b ORDER BY b.bno DESC")
-//    @Query("SELECT b.bno, b.title, b.modDate, b.member.mno FROM Board b ORDER BY b.bno DESC")
-    List<Board> findAllDesc();
-
     Page<Board> findByTitleLike(String title, Pageable pageable); // 제목 검색
     Page<Board> findByContentLike(String content, Pageable pageable); // 내용 검색
     Page<Board> findByTitleLikeOrContentLike(String title, String content, Pageable pageable); // 제목 or 내용 검색
