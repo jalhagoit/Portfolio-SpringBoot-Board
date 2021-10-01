@@ -18,7 +18,7 @@
                 <button type="submit" class="btn btn-primary">수정</button>
             </form>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" th:if="${#httpServletRequest.getUserPrincipal()} != null AND ${board.member.username == #httpServletRequest.getUserPrincipal().getPrincipal().getUsername}">
                 삭제
             </button>
 
