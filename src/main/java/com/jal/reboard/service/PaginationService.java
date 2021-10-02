@@ -1,6 +1,6 @@
 package com.jal.reboard.service;
 
-import com.jal.reboard.domain.dto.BoardRfDTO;
+import com.jal.reboard.domain.dto.BoardListDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.repository.BoardRepository;
@@ -25,15 +25,15 @@ public class PaginationService {
     MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public BoardRfDTO boardListAll(Pageable pageable) {
+    public BoardListDTO boardListAll(Pageable pageable) {
 
         Page<Board> boards = boardRepository.findAll(pageable);
 
-        return new BoardRfDTO(boards, pagination(boards));
+        return new BoardListDTO(boards, pagination(boards));
     }
 
     @Transactional(readOnly = true)
-    public BoardRfDTO searchList(String searchType, String keyword, Pageable pageable) {
+    public BoardListDTO searchList(String searchType, String keyword, Pageable pageable) {
 
         Page<Board> findBoard = null;
         
@@ -45,16 +45,16 @@ public class PaginationService {
             findBoard = boardRepository.findByTitleLikeOrContentLike(keyword, keyword, pageable);
         }
 
-        return new BoardRfDTO(findBoard, pagination(findBoard));
+        return new BoardListDTO(findBoard, pagination(findBoard));
     }
 
     @Transactional(readOnly = true)
-    public BoardRfDTO memberWrittenBoardList(String username, Pageable pageable) {
+    public BoardListDTO memberWrittenBoardList(String username, Pageable pageable) {
 
         Member member = memberRepository.findMnoByUsername(username);
         Page<Board> page = boardRepository.findBnoByMember(member, pageable);
 
-        return new BoardRfDTO(page, pagination(page));
+        return new BoardListDTO(page, pagination(page));
     }
 
 

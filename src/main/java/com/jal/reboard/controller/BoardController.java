@@ -1,6 +1,6 @@
 package com.jal.reboard.controller;
 
-import com.jal.reboard.domain.dto.BoardRfDTO;
+import com.jal.reboard.domain.dto.BoardListDTO;
 import com.jal.reboard.domain.dto.BoardDTO;
 import com.jal.reboard.service.BoardServiceImpl;
 import com.jal.reboard.service.PaginationService;
@@ -29,7 +29,7 @@ public class BoardController {
     @GetMapping({"/", "/list"})
     public String boardListAll(Model model, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        BoardRfDTO dto = paginationService.boardListAll(pageable);
+        BoardListDTO dto = paginationService.boardListAll(pageable);
         model.addAttribute("boards", dto.getFindall());
         model.addAttribute("pageNums", dto.getPagination());
 
@@ -40,7 +40,7 @@ public class BoardController {
     @GetMapping("/list/search")
     public String searchBoards(String keyword, String searchType, @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable ,Model model) {
 
-        BoardRfDTO dto = paginationService.searchList(searchType, "%"+keyword+"%", pageable);
+        BoardListDTO dto = paginationService.searchList(searchType, "%"+keyword+"%", pageable);
         model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
         model.addAttribute("boards", dto.getFindall());

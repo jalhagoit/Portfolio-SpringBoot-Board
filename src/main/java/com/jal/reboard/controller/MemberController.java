@@ -1,6 +1,6 @@
 package com.jal.reboard.controller;
 
-import com.jal.reboard.domain.dto.BoardRfDTO;
+import com.jal.reboard.domain.dto.BoardListDTO;
 import com.jal.reboard.domain.dto.MemberDTO;
 import com.jal.reboard.domain.dto.MemberInfoDTO;
 import com.jal.reboard.service.MemberService;
@@ -112,7 +112,7 @@ public class MemberController {
     public String memBoards(HttpServletRequest httpServletRequest, Model model,
                             @PageableDefault(sort = "bno", direction = Sort.Direction.DESC) Pageable pageable) {
         String username = httpServletRequest.getUserPrincipal().getName();
-        BoardRfDTO dto = paginationService.memberWrittenBoardList(username, pageable);
+        BoardListDTO dto = paginationService.memberWrittenBoardList(username, pageable);
         model.addAttribute("boards", dto.getFindall());
         model.addAttribute("pageNums", dto.getPagination());
         return "member/memberBoards";
