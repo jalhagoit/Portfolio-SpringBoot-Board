@@ -43,14 +43,14 @@ public class MemberController {
     public String registerPost(String username, String password, Model model, MemberDTO dto) {
         if (regexService.usernamePattern(username)
                 && regexService.passwordPattern(password)) {
-            // "\\w+@\\w+\\.\\w+(\\.\\w+)?"; //이메일
+
             if (memberService.usernameDuplicationCheck(username)) {
                 model.addAttribute("msg", "이미 존재하는 Username입니다.");
                 return "member/registerForm";
             } else {
                 memberService.register(dto);
                 return "member/registerConfirmPage";
-//        return "checkEmailForRegister";
+                // TODO return "checkEmailForRegister";
             }
 
         } else {
@@ -120,11 +120,19 @@ public class MemberController {
 
     /* 회원 탈퇴 */
     @DeleteMapping("/mem/account")
-    public String deleteAccount(HttpServletRequest httpServletRequest) throws ServletException {
-        // TODO 삭제 전 비번 확인
-        memberService.deleteAccount(httpServletRequest);
-        httpServletRequest.logout();
-        return "redirect:/";
+    public String deleteAccount(HttpServletRequest httpServletRequest, String password, RedirectAttributes redirectAttributes) throws ServletException {
+
+        String username = httpServletRequest.getUserPrincipal().getName();
+
+        if (memberService.checkPasswordMatch(username, password)) {
+            memberService.deleteAccount(httpServletRequest);
+            httpServletRequest.logout();
+            return "redirect:/";
+        } else {
+            redirectAttributes.addFlashAttribute("pwdMsg", true);
+            return "redirect:/mem";
+        }
+
     }
 
 }

@@ -56,18 +56,25 @@ public class MemberService {
 
     /* 비밀번호 변경 */
     public boolean changePwd(String username, String password, String newPwd) {
-        Member member = memberRepository.findMnoByUsername(username);
 
-        if(passwordEncoder.matches(password, member.getPassword())){
+        if(checkPasswordMatch(username, password)){
+            Member member = memberRepository.findMnoByUsername(username);
             String encodePassword = passwordEncoder.encode(newPwd);
             member.setPassword(encodePassword);
             memberRepository.save(member);
             return true;
         } else {
-            //            throw new RuntimeException("현재 비밀번호와 일치하지 않습니다");
+            // TODO throw new RuntimeException("현재 비밀번호와 일치하지 않습니다");
             return false;
         }
 
+    }
+
+    /* 비번 일치 확인 */
+    public boolean checkPasswordMatch(String username, String password) {
+        Member member = memberRepository.findMnoByUsername(username);
+
+        return passwordEncoder.matches(password, member.getPassword());
     }
 
     /* 회원 탈퇴 */

@@ -30,6 +30,9 @@
                                 Password : <a href="/mem/changeInfo" class="card-link">변경</a></li>
                             <li class="list-group-item disabled" aria-disabled="true">가입일 : [[${#temporals.format(regDate, 'yyyy-MM-dd HH:mm:SS')}]]</li>
                             <li class="list-group-item">
+                                <div th:if="${pwdMsg}" class="alert alert-danger alert-dismissible" role="alert">
+                                    <strong>!</strong> 비밀번호가 일치하지 않습니다.
+                                </div>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     탈퇴
@@ -40,18 +43,19 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">회원탈퇴</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">탈퇴하시겠습니까?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                탈퇴하시겠습니까?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                                <form style='display:inline' th:action="@{mem/account}" th:method="delete">
+                                            <form style='display:inline' th:action="@{mem/account}" th:method="delete">
+                                                <div class="modal-body">
+                                                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해 주세요" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                                                     <button type="submit" class="btn btn-danger">탈퇴</button>
-                                                </form>
-                                            </div>
+                                                </div>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
