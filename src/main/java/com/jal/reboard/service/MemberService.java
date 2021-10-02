@@ -75,6 +75,7 @@ public class MemberService {
     public void deleteAccount(HttpServletRequest httpServletRequest) {
         String username = httpServletRequest.getUserPrincipal().getName();
         memberRepository.deleteByUsername(username);
+        // TODO 작성된 글이 있으면(Cannot delete or update a parent row: a foreign key constraint fails) 500에러가 뜨며 탈퇴되지 않는다.
     }
 
 }

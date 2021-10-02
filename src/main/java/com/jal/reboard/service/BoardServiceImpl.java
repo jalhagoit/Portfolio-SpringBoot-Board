@@ -1,7 +1,6 @@
 package com.jal.reboard.service;
 
 import com.jal.reboard.domain.dto.BoardDTO;
-import com.jal.reboard.domain.dto.BwriteDTO;
 import com.jal.reboard.domain.entity.Board;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.CType;
@@ -27,14 +26,14 @@ public class BoardServiceImpl implements BoardService{
     ReplyRepository replyRepository;
 
     /* 글 작성 */
-    public Long writeBoard(BwriteDTO dto) {
-        Member mno = memberRepository.findMnoByUsername(dto.getUsername());
+    public Long writeBoard(BoardDTO dto) {
+        Member member = memberRepository.findMnoByUsername(dto.getUsername());
 
         Board board = Board.builder()
                 .bno(dto.getBno())
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .member(mno)
+                .member(member)
                 .ctype(CType.ONBOARD)
                 .build();
 
