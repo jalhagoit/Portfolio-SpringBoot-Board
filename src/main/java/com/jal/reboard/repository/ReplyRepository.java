@@ -24,5 +24,8 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     List<Reply> findByParentLike(Reply rno);
 
+    @Query(value = "update reply set mno=null where rno=:rno", nativeQuery = true)
+    void setMnoNull(@Param("rno") Long rno);
+
 
 }

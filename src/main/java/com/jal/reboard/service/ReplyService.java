@@ -91,6 +91,7 @@ public class ReplyService {
             Reply reply = replyRepository.getById(rno);
             reply.setCtype(CType.DELETED);
             reply.setDelDate(LocalDateTime.now());
+            replyRepository.setMnoNull(rno);
 
             replyRepository.save(reply);
 
