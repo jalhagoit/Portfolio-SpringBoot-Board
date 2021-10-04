@@ -85,7 +85,7 @@ public class ReplyService {
 
     /* 댓글 삭제 */
     @Transactional
-    public void replyDelete(Long rno) {
+    public void deleteReply(Long rno) {
         if (replyRepository.findByParentLike(Reply.builder().rno(rno).build()).size() > 0) {
 
             Reply reply = replyRepository.getById(rno);

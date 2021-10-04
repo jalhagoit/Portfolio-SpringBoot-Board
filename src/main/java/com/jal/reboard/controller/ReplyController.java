@@ -34,7 +34,7 @@ public class ReplyController {
     public String replyDelete(HttpServletRequest httpServletRequest, @PathVariable Long rno) {
 
         if (replyService.checkSameWriter(rno, httpServletRequest)) {
-            replyService.replyDelete(rno);
+            replyService.deleteReply(rno);
         }
         return "redirect:/board/{bno}";
 
