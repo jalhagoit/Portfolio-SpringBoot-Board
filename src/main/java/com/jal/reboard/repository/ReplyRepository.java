@@ -1,5 +1,6 @@
 package com.jal.reboard.repository;
 
+import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.entity.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,6 +27,9 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     @Query(value = "update reply set mno=null where rno=:rno", nativeQuery = true)
     void setMnoNull(@Param("rno") Long rno);
+
+    @Query("SELECT r.rno FROM Reply r WHERE r.member = :member")
+    List<Long> findRnoByMember(@Param("member") Member member);
 
 
 }

@@ -19,6 +19,9 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     @Query("SELECT b FROM Board b WHERE b.member = :member")
     Page<Board> findBnoByMember(@Param("member") Member member, Pageable pageable);
 
+    @Query("SELECT b.bno FROM Board b WHERE b.member = :member")
+    List<Long> findBnoByMember(@Param("member") Member member);
+
 //    제목 두 단어 검색 테스트
     @Query("SELECT b FROM Board b WHERE b.title LIKE CONCAT('%',:keyword1,'%') " +
             "AND b.title LIKE CONCAT('%',:keyword2,'%')")

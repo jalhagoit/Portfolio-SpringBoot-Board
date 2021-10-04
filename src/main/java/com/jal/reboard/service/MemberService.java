@@ -4,11 +4,15 @@ import com.jal.reboard.domain.dto.MemberDTO;
 import com.jal.reboard.domain.dto.MemberInfoDTO;
 import com.jal.reboard.domain.entity.Member;
 import com.jal.reboard.domain.type.RoleType;
+import com.jal.reboard.repository.BoardRepository;
 import com.jal.reboard.repository.MemberRepository;
+import com.jal.reboard.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -19,6 +23,18 @@ public class MemberService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BoardService boardService;
+
+    @Autowired
+    private ReplyService replyService;
+
+    @Autowired
+    private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     /* 회원가입 */
     @Transactional
@@ -79,8 +95,26 @@ public class MemberService {
     /* 회원 탈퇴 */
     @Transactional
     public void deleteAccount(String username) {
+
+        Member member = memberRepository.findMnoByUsername(username);
+
+        List<Long> bnos = boardRepository.findBnoByMember(member);
+        if (bnos.size() > 0) { // null이 아니라면 (작성글이 있다면)
+            for (Long bno : bnos) {
+                // 작성글들을 모두 삭제한다
+                boardService.deleteBoard(bno);
+            }
+        }
+
+        List<Long> rnos = replyRepository.findRnoByMember(member);
+        if (rnos.size() > 0) { // null이 아니라면 (작성댓이 있다면)
+            for (Long rno : rnos) {
+                // 작성댓들을 모두 삭제한다
+                replyService.deleteReply(rno);
+            }
+        }
+
         memberRepository.deleteByUsername(username);
-        // TODO 작성된 글이 있으면(Cannot delete or update a parent row: a foreign key constraint fails) 500에러가 뜨며 탈퇴되지 않는다.
     }
 
 }
