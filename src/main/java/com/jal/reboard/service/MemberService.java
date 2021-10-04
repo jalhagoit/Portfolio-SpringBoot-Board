@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class MemberService {
@@ -79,8 +78,7 @@ public class MemberService {
 
     /* 회원 탈퇴 */
     @Transactional
-    public void deleteAccount(HttpServletRequest httpServletRequest) {
-        String username = httpServletRequest.getUserPrincipal().getName();
+    public void deleteAccount(String username) {
         memberRepository.deleteByUsername(username);
         // TODO 작성된 글이 있으면(Cannot delete or update a parent row: a foreign key constraint fails) 500에러가 뜨며 탈퇴되지 않는다.
     }

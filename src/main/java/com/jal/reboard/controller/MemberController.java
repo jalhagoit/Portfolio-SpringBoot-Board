@@ -125,7 +125,7 @@ public class MemberController {
         String username = httpServletRequest.getUserPrincipal().getName();
 
         if (memberService.checkPasswordMatch(username, password)) {
-            memberService.deleteAccount(httpServletRequest);
+            memberService.deleteAccount(username);
             httpServletRequest.logout();
             return "redirect:/";
         } else {

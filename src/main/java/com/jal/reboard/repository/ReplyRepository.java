@@ -14,6 +14,14 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     @Query("delete from Reply r where r.board.bno =:bno")
     void deleteByBno(@Param("bno") Long bno);
 
+    @Modifying
+    @Query("delete from Reply r where r.board.bno =:bno AND r.depth=1")
+    void deleteByBnoDepth1(@Param("bno") Long bno);
+
+    @Modifying
+    @Query("delete from Reply r where r.board.bno =:bno AND r.depth=2")
+    void deleteByBnoDepth2(@Param("bno") Long bno);
+
     List<Reply> findByParentLike(Reply rno);
 
 

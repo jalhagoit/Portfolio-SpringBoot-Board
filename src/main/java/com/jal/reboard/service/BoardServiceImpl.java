@@ -77,6 +77,8 @@ public class BoardServiceImpl implements BoardService{
     /* 글 삭제 */
     @Transactional
     public void deleteBoard(Long bno) {
+        replyRepository.deleteByBnoDepth2(bno);
+        replyRepository.deleteByBnoDepth1(bno);
         replyRepository.deleteByBno(bno);
         boardRepository.deleteById(bno);
     }
